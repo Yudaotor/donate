@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>请 Lyrimuse 作者喝杯咖啡 ☕</title>
+<meta name="description" content="如果 Lyrimuse 帮你在 Mac 上看清了歌词，欢迎请作者喝杯咖啡。">
+<style>
+  :root {
+    --bg: #faf6f0;
+    --card-bg: #ffffff;
+    --ink: #2b2320;
+    --ink-soft: #6b5f56;
+    --accent: #c47a3a;
+    --accent-soft: #f1ddc8;
+    --border: rgba(43, 35, 32, 0.08);
+    --shadow: rgba(43, 35, 32, 0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1714;
+      --card-bg: #262019;
+      --ink: #f3ece3;
+      --ink-soft: #b8aa9c;
+      --accent: #e2a465;
+      --accent-soft: #3a2d20;
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1714;
+    --card-bg: #262019;
+    --ink: #f3ece3;
+    --ink-soft: #b8aa9c;
+    --accent: #e2a465;
+    --accent-soft: #3a2d20;
+    --border: rgba(255, 255, 255, 0.08);
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #faf6f0;
+    --card-bg: #ffffff;
+    --ink: #2b2320;
+    --ink-soft: #6b5f56;
+    --accent: #c47a3a;
+    --accent-soft: #f1ddc8;
+    --border: rgba(43, 35, 32, 0.08);
+    --shadow: rgba(43, 35, 32, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+  main {
+    width: 100%;
+    max-width: 640px;
+  }
+  .hero {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .hero .cup {
+    font-size: 44px;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 650;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .hero p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 480px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 520px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 22px 26px;
+    box-shadow: 0 10px 30px var(--shadow);
+    text-align: center;
+  }
+  .card .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .card img {
+    width: 100%;
+    max-width: 220px;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
+  .card .hint {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer a {
+    color: var(--ink-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <div class="cup">☕</div>
+    <h1>请 Lyrimuse 作者喝杯咖啡</h1>
+    <p>Lyrimuse 是一个免费、开源的 Mac 悬浮歌词工具。如果它让你在听歌时看清了每一句词，欢迎扫码请作者喝一杯——完全随意，不喝也不影响继续用。</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <span class="label">支付宝</span>
+      <img src="assets/alipay.jpg" alt="支付宝收款码" loading="lazy">
+      <div class="hint">打开支付宝扫一扫</div>
+    </div>
+    <div class="card">
+      <span class="label">微信支付</span>
+      <img src="assets/wechat.jpg" alt="微信收款码" loading="lazy">
+      <div class="hint">打开微信扫一扫</div>
+    </div>
+  </div>
+  <footer>
+    Lyrimuse · <a href="https://github.com/Yudaotor/lyrimuse">GitHub 仓库</a>
+  </footer>
+</main>
+</body>
+</html>
