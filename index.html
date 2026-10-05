@@ -227,14 +227,14 @@
     </div>
   </div>
   <div class="pay-grid">
-    <details class="pay alipay">
+    <details class="pay alipay" id="alipay">
       <summary><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg><span data-i18n="alipayToggle">支付宝扫码</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
       <div class="card">
         <img src="assets/alipay.jpg" alt="支付宝收款码" data-i18n-alt="alipayAlt" loading="lazy">
         <div class="hint" data-i18n="alipayHint">打开支付宝扫一扫</div>
       </div>
     </details>
-    <details class="pay wechat">
+    <details class="pay wechat" id="wechat">
       <summary><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg><span data-i18n="wechatToggle">微信扫码</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
       <div class="card">
         <img src="assets/wechat.jpg" alt="微信收款码" data-i18n-alt="wechatAlt" loading="lazy">
@@ -292,6 +292,18 @@
   if (meta) meta.setAttribute("content", t.description);
   document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t[el.getAttribute("data-i18n")]; });
   document.querySelectorAll("[data-i18n-alt]").forEach(function (el) { el.alt = t[el.getAttribute("data-i18n-alt")]; });
+})();
+// 带着 #alipay / #wechat 进来(仓库 Sponsor 按钮、主页 README 的链接)时展开对应那张收款码。
+(function () {
+  function openFromHash() {
+    var d = document.getElementById(location.hash.slice(1));
+    if (d && d.tagName === "DETAILS") {
+      d.open = true;
+      d.scrollIntoView({ block: "center" });
+    }
+  }
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
 })();
 </script>
 </body>
