@@ -247,7 +247,7 @@
   </footer>
 </main>
 <script>
-// 两张收款码各收在一个品牌色按钮里(<details>),点开才显示。按浏览器语言显示:中文浏览器显示简体,台湾 / 香港 / 澳门显示繁体,其它语言一律英文。?lang=en 之类可以强制。
+// 两张收款码各收在一个品牌色按钮里(<details>),点开才显示。界面语言跟 Lyrimuse 的 16 种一致:中文按简繁分,pt 开头用 pt-BR,其它按前两位字母找,都没有就用英文。?lang=ja 之类可以强制。
 (function () {
   var T = {
     "zh-Hans": {
@@ -273,15 +273,131 @@
       alipay: "Alipay", alipayAlt: "Alipay QR code", alipayHint: "Scan with Alipay",
       wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR code", wechatHint: "Scan with WeChat",
       alipayToggle: "Alipay QR code", wechatToggle: "WeChat Pay QR code"
+    },
+    "ja": {
+      pageTitle: "作者にコーヒーをおごる ☕", description: "この小さなプロジェクトが役に立ったら、作者にコーヒーを一杯おごってください。",
+      title: "作者にコーヒーをおごる", intro: "この小さなオープンソースプロジェクトが役に立ったら、作者にコーヒーを一杯おごってください。",
+      sponsor: "GitHubで支援する", sponsorHint: "GitHubアカウントで、毎月または1回だけ支援できます。",
+      alipay: "Alipay", alipayAlt: "AlipayのQRコード", alipayHint: "Alipayでスキャン",
+      wechat: "WeChat Pay", wechatAlt: "WeChat PayのQRコード", wechatHint: "WeChatでスキャン",
+      alipayToggle: "AlipayのQRコード", wechatToggle: "WeChat PayのQRコード"
+    },
+    "ko": {
+      pageTitle: "개발자에게 커피 한 잔 사기 ☕", description: "이 작은 프로젝트가 도움이 되었다면 개발자에게 커피 한 잔을 사 주십시오.",
+      title: "개발자에게 커피 한 잔 사기", intro: "이 작은 오픈 소스 프로젝트가 도움이 되었다면 개발자에게 커피 한 잔을 사 주십시오.",
+      sponsor: "GitHub에서 후원하기", sponsorHint: "GitHub 계정으로 매월 또는 한 번만 후원할 수 있습니다.",
+      alipay: "알리페이", alipayAlt: "알리페이 QR 코드", alipayHint: "알리페이 앱으로 스캔하십시오",
+      wechat: "위챗페이", wechatAlt: "위챗페이 QR 코드", wechatHint: "위챗 앱으로 스캔하십시오",
+      alipayToggle: "알리페이 QR 코드", wechatToggle: "위챗페이 QR 코드"
+    },
+    "es": {
+      pageTitle: "Invita al autor a un café ☕", description: "Si este pequeño proyecto te ha ayudado, puedes invitar al autor a un café.",
+      title: "Invita al autor a un café", intro: "Si este pequeño proyecto de código abierto te ha ayudado, puedes invitar al autor a un café.",
+      sponsor: "Patrocinar en GitHub", sponsorHint: "Patrocina con tu cuenta de GitHub, cada mes o una sola vez.",
+      alipay: "Alipay", alipayAlt: "Código QR de Alipay", alipayHint: "Escanéalo con Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Código QR de WeChat Pay", wechatHint: "Escanéalo con WeChat",
+      alipayToggle: "Código QR de Alipay", wechatToggle: "Código QR de WeChat Pay"
+    },
+    "fr": {
+      pageTitle: "Offrir un café à l’auteur ☕", description: "Si ce petit projet vous a été utile, vous pouvez offrir un café à l’auteur.",
+      title: "Offrir un café à l’auteur", intro: "Si ce petit projet open source vous a été utile, vous pouvez offrir un café à l’auteur.",
+      sponsor: "Soutenir sur GitHub", sponsorHint: "Soutenez avec votre compte GitHub, chaque mois ou une seule fois.",
+      alipay: "Alipay", alipayAlt: "Code QR Alipay", alipayHint: "Scannez avec Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Code QR WeChat Pay", wechatHint: "Scannez avec WeChat",
+      alipayToggle: "Code QR Alipay", wechatToggle: "Code QR WeChat Pay"
+    },
+    "de": {
+      pageTitle: "Spendier dem Autor einen Kaffee ☕", description: "Wenn dir dieses kleine Projekt geholfen hat, kannst du dem Autor gern einen Kaffee spendieren.",
+      title: "Spendier dem Autor einen Kaffee", intro: "Wenn dir dieses kleine Open-Source-Projekt geholfen hat, kannst du dem Autor gern einen Kaffee spendieren.",
+      sponsor: "Auf GitHub unterstützen", sponsorHint: "Unterstütze mit deinem GitHub-Account, monatlich oder einmalig.",
+      alipay: "Alipay", alipayAlt: "Alipay-QR-Code", alipayHint: "Mit Alipay scannen",
+      wechat: "WeChat Pay", wechatAlt: "WeChat-Pay-QR-Code", wechatHint: "Mit WeChat scannen",
+      alipayToggle: "Alipay-QR-Code", wechatToggle: "WeChat-Pay-QR-Code"
+    },
+    "it": {
+      pageTitle: "Offri un caffè all’autore ☕", description: "Se questo piccolo progetto ti è stato utile, puoi offrire un caffè all’autore.",
+      title: "Offri un caffè all’autore", intro: "Se questo piccolo progetto open source ti è stato utile, puoi offrire un caffè all’autore.",
+      sponsor: "Sostieni su GitHub", sponsorHint: "Sostieni con il tuo account GitHub, ogni mese o una volta sola.",
+      alipay: "Alipay", alipayAlt: "Codice QR Alipay", alipayHint: "Scansiona con Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Codice QR WeChat Pay", wechatHint: "Scansiona con WeChat",
+      alipayToggle: "Codice QR Alipay", wechatToggle: "Codice QR WeChat Pay"
+    },
+    "pt-BR": {
+      pageTitle: "Pague um café ao autor ☕", description: "Se este pequeno projeto foi útil para você, que tal pagar um café ao autor?",
+      title: "Pague um café ao autor", intro: "Se este pequeno projeto de código aberto foi útil para você, que tal pagar um café ao autor?",
+      sponsor: "Patrocinar no GitHub", sponsorHint: "Patrocine com sua conta do GitHub, todo mês ou uma única vez.",
+      alipay: "Alipay", alipayAlt: "Código QR do Alipay", alipayHint: "Escaneie com o Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Código QR do WeChat Pay", wechatHint: "Escaneie com o WeChat",
+      alipayToggle: "Código QR do Alipay", wechatToggle: "Código QR do WeChat Pay"
+    },
+    "vi": {
+      pageTitle: "Mời tác giả một ly cà phê ☕", description: "Nếu dự án nhỏ này giúp ích cho bạn, hãy mời tác giả một ly cà phê.",
+      title: "Mời tác giả một ly cà phê", intro: "Nếu dự án mã nguồn mở nhỏ này giúp ích cho bạn, hãy mời tác giả một ly cà phê.",
+      sponsor: "Tài trợ trên GitHub", sponsorHint: "Tài trợ bằng tài khoản GitHub, hằng tháng hoặc một lần.",
+      alipay: "Alipay", alipayAlt: "Mã QR Alipay", alipayHint: "Quét bằng Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Mã QR WeChat Pay", wechatHint: "Quét bằng WeChat",
+      alipayToggle: "Mã QR Alipay", wechatToggle: "Mã QR WeChat Pay"
+    },
+    "ru": {
+      pageTitle: "Угостить автора кофе ☕", description: "Если этот небольшой проект вам пригодился, можете угостить автора кофе.",
+      title: "Угостить автора кофе", intro: "Если этот небольшой проект с открытым кодом вам пригодился, можете угостить автора кофе.",
+      sponsor: "Поддержать на GitHub", sponsorHint: "Поддержите через аккаунт GitHub — ежемесячно или разово.",
+      alipay: "Alipay", alipayAlt: "QR-код Alipay", alipayHint: "Отсканируйте в Alipay",
+      wechat: "WeChat Pay", wechatAlt: "QR-код WeChat Pay", wechatHint: "Отсканируйте в WeChat",
+      alipayToggle: "QR-код Alipay", wechatToggle: "QR-код WeChat Pay"
+    },
+    "uk": {
+      pageTitle: "Пригостити автора кавою ☕", description: "Якщо цей невеликий проєкт став вам у пригоді, можете пригостити автора кавою.",
+      title: "Пригостити автора кавою", intro: "Якщо цей невеликий проєкт із відкритим кодом став вам у пригоді, можете пригостити автора кавою.",
+      sponsor: "Підтримати на GitHub", sponsorHint: "Підтримайте через обліковий запис GitHub — щомісяця або одноразово.",
+      alipay: "Alipay", alipayAlt: "QR-код Alipay", alipayHint: "Відскануйте в Alipay",
+      wechat: "WeChat Pay", wechatAlt: "QR-код WeChat Pay", wechatHint: "Відскануйте у WeChat",
+      alipayToggle: "QR-код Alipay", wechatToggle: "QR-код WeChat Pay"
+    },
+    "th": {
+      pageTitle: "เลี้ยงกาแฟผู้พัฒนา ☕", description: "หากโปรเจกต์เล็กๆ นี้มีประโยชน์กับคุณ เลี้ยงกาแฟผู้พัฒนาสักแก้วได้",
+      title: "เลี้ยงกาแฟผู้พัฒนา", intro: "หากโปรเจกต์โอเพนซอร์สเล็กๆ นี้มีประโยชน์กับคุณ เลี้ยงกาแฟผู้พัฒนาสักแก้วได้",
+      sponsor: "สนับสนุนบน GitHub", sponsorHint: "สนับสนุนด้วยบัญชี GitHub ได้ทั้งรายเดือนและครั้งเดียว",
+      alipay: "Alipay", alipayAlt: "คิวอาร์โค้ด Alipay", alipayHint: "สแกนด้วย Alipay",
+      wechat: "WeChat Pay", wechatAlt: "คิวอาร์โค้ด WeChat Pay", wechatHint: "สแกนด้วย WeChat",
+      alipayToggle: "คิวอาร์โค้ด Alipay", wechatToggle: "คิวอาร์โค้ด WeChat Pay"
+    },
+    "tr": {
+      pageTitle: "Geliştiriciye bir kahve ısmarlayın ☕", description: "Bu küçük proje işinize yaradıysa geliştiriciye bir kahve ısmarlayabilirsiniz.",
+      title: "Geliştiriciye bir kahve ısmarlayın", intro: "Bu küçük açık kaynak proje işinize yaradıysa geliştiriciye bir kahve ısmarlayabilirsiniz.",
+      sponsor: "GitHub’da destek olun", sponsorHint: "GitHub hesabınızla aylık ya da tek seferlik destek olabilirsiniz.",
+      alipay: "Alipay", alipayAlt: "Alipay QR kodu", alipayHint: "Alipay ile tarayın",
+      wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR kodu", wechatHint: "WeChat ile tarayın",
+      alipayToggle: "Alipay QR kodu", wechatToggle: "WeChat Pay QR kodu"
+    },
+    "hi": {
+      pageTitle: "डेवलपर को एक कॉफ़ी पिलाएँ ☕", description: "अगर यह छोटा-सा प्रोजेक्ट आपके काम आया, तो डेवलपर को एक कॉफ़ी पिलाएँ।",
+      title: "डेवलपर को एक कॉफ़ी पिलाएँ", intro: "अगर यह छोटा-सा ओपन-सोर्स प्रोजेक्ट आपके काम आया, तो डेवलपर को एक कॉफ़ी पिलाएँ।",
+      sponsor: "GitHub पर सहयोग करें", sponsorHint: "अपने GitHub खाते से हर महीने या एक बार सहयोग करें।",
+      alipay: "Alipay", alipayAlt: "Alipay QR कोड", alipayHint: "Alipay से स्कैन करें",
+      wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR कोड", wechatHint: "WeChat से स्कैन करें",
+      alipayToggle: "Alipay QR कोड", wechatToggle: "WeChat Pay QR कोड"
     }
   };
+  // ?lang= 先认(ja、pt-BR、zh-Hans 这类写法,大小写不限),认不出就按浏览器语言列表挨个找。
+  function match(raw) {
+    var l = String(raw || "").toLowerCase().replace(/_/g, "-");
+    if (l.indexOf("zh") === 0) {
+      if (/hans/.test(l)) return "zh-Hans";
+      return /hant|-tw|-hk|-mo/.test(l) ? "zh-Hant" : "zh-Hans";
+    }
+    if (l.indexOf("pt") === 0) return "pt-BR";
+    var two = l.slice(0, 2);
+    if (l.length > 2 && l.charAt(2) !== "-") return null;
+    return Object.prototype.hasOwnProperty.call(T, two) ? two : null;
+  }
   function pick() {
     var forced = new URLSearchParams(location.search).get("lang");
-    var list = forced ? [forced] : (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
+    var list = navigator.languages && navigator.languages.length ? navigator.languages.slice() : [navigator.language || ""];
+    if (forced) list.unshift(forced);
     for (var i = 0; i < list.length; i++) {
-      var l = String(list[i]).toLowerCase();
-      if (l.indexOf("zh") === 0) return /hant|-tw|-hk|-mo/.test(l) ? "zh-Hant" : "zh-Hans";
-      if (l.indexOf("en") === 0) return "en";
+      var hit = match(list[i]);
+      if (hit) return hit;
     }
     return "en";
   }
