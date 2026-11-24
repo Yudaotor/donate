@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>请作者喝杯咖啡 ☕</title>
+<meta name="description" content="如果这个小项目对你有帮助，欢迎请作者喝杯咖啡。">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f3f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/jpeg" href="../assets/avatar.jpg">
+<link rel="apple-touch-icon" href="../assets/avatar.jpg">
+<style>
+  /* 方向 B：赞助者通行证。夜色里一张会随指针倾斜、带镭射膜的卡片，周围是玻璃面板和玫红光晕 */
+  :root {
+    --bg: #f6f3f8;
+    --ink: #140f1a;
+    --ink-2: rgba(20, 15, 26, 0.62);
+    --unlit: #ddd5e1;
+    --lit-1: #e2336f;
+    --lit-2: #c91f5a;
+    --lit-3: #ef7a3d;
+    --glass: rgba(255, 255, 255, 0.62);
+    --glass-2: rgba(255, 255, 255, 0.85);
+    --edge: rgba(40, 20, 50, 0.09);
+    --edge-hi: rgba(255, 255, 255, 0.9);
+    --glow-a: rgba(255, 92, 140, 0.30);
+    --glow-b: rgba(255, 170, 110, 0.26);
+    --glow-c: rgba(140, 120, 255, 0.20);
+    --ray: rgba(226, 51, 111, 0.06);
+    --rose: #d42f63;
+    --rose-hover: #bd2556;
+    --rose-text: #b3204f;
+    --card-1: #fbf7fb;
+    --card-2: #efe7f1;
+    --card-ink: #1b1220;
+    --card-ink-2: rgba(27, 18, 32, 0.55);
+    --foil-blend: multiply;
+    --foil-alpha: 0.32;
+    --shadow: 0 1px 2px rgba(40, 20, 50, 0.06), 0 30px 60px -30px rgba(60, 20, 60, 0.30);
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, "Noto Sans", sans-serif;
+    --serif: ui-serif, "New York", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "Noto Serif SC", Georgia, "Times New Roman", serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --ink: #ffffff;
+      --ink-2: rgba(255, 255, 255, 0.62);
+      --unlit: #2c2530;
+      --lit-1: #ff9cbc;
+      --lit-2: #ff4f86;
+      --lit-3: #ffb27a;
+      --glass: rgba(255, 255, 255, 0.045);
+      --glass-2: rgba(255, 255, 255, 0.08);
+      --edge: rgba(255, 255, 255, 0.10);
+      --edge-hi: rgba(255, 255, 255, 0.22);
+      --glow-a: rgba(255, 61, 127, 0.36);
+      --glow-b: rgba(255, 150, 90, 0.20);
+      --glow-c: rgba(130, 100, 255, 0.24);
+      --ray: rgba(255, 120, 165, 0.10);
+      --rose: #ec4b7c;
+      --rose-hover: #f3628f;
+      --rose-text: #ff8db0;
+      --card-1: #22121c;
+      --card-2: #0d0a14;
+      --card-ink: #ffffff;
+      --card-ink-2: rgba(255, 255, 255, 0.58);
+      --foil-blend: color-dodge;
+      --foil-alpha: 0.24;
+      --shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 40px 80px -30px rgba(0, 0, 0, 0.9);
+    }
+  }
+  :root:lang(zh-Hant) { --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", "Segoe UI", Roboto, "Noto Sans", sans-serif; --serif: ui-serif, "New York", "Songti TC", "Noto Serif CJK TC", "Source Han Serif TC", "Noto Serif TC", Georgia, serif; }
+  :root:lang(ja) { --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", Roboto, "Noto Sans", sans-serif; --serif: ui-serif, "New York", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", "Noto Serif JP", Georgia, serif; }
+  :root:lang(ko) { --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", Roboto, "Noto Sans", sans-serif; --serif: ui-serif, "New York", "AppleMyungjo", "Nanum Myeongjo", "Noto Serif CJK KR", "Noto Serif KR", Georgia, serif; }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; background: var(--bg); }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--rose-text); outline-offset: 3px; border-radius: 8px; }
+  :lang(ko) :is(h1, h2, h3, p, dd, dt) { word-break: keep-all; }
+  :lang(ja) :is(h1, h2, h3, p, dd, dt) { word-break: auto-phrase; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* 顶部光：一团玫红和桃色的光晕，加一束斜着扫过的细光线 */
+  .sky { position: absolute; inset: 0 0 auto 0; height: 1100px; overflow: hidden; pointer-events: none; z-index: 0; }
+  .sky::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -420px;
+    width: 1500px;
+    height: 1100px;
+    margin-left: -750px;
+    background:
+      radial-gradient(closest-side at 50% 52%, var(--glow-a), transparent 72%),
+      radial-gradient(closest-side at 28% 62%, var(--glow-c), transparent 70%),
+      radial-gradient(closest-side at 74% 60%, var(--glow-b), transparent 70%);
+    animation: breathe 14s ease-in-out infinite alternate;
+  }
+  .sky::after {
+    content: "";
+    position: absolute;
+    inset: -200px -400px 0 -400px;
+    background: repeating-linear-gradient(112deg, transparent 0 58px, var(--ray) 58px 60px, transparent 60px 132px);
+    -webkit-mask-image: radial-gradient(ellipse 50% 45% at 50% 18%, #000 10%, transparent 72%);
+    mask-image: radial-gradient(ellipse 50% 45% at 50% 18%, #000 10%, transparent 72%);
+    animation: rays 30s linear infinite;
+  }
+  @keyframes breathe { from { transform: scale(1) translateY(0); opacity: .9; } to { transform: scale(1.08) translateY(30px); opacity: 1; } }
+  @keyframes rays { from { transform: translateX(0); } to { transform: translateX(132px); } }
+
+  .wrap { position: relative; z-index: 1; width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+
+  .top { position: relative; z-index: 2; padding: 22px 0; }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .who { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 15px; }
+  .who img { width: 32px; height: 32px; border-radius: 50%; display: block; box-shadow: 0 0 0 1px var(--edge); }
+  .who:hover span { text-decoration: underline; text-underline-offset: 3px; }
+  .lang { position: relative; display: inline-flex; align-items: center; }
+  .lang svg { position: absolute; left: 11px; color: var(--ink-2); pointer-events: none; }
+  .lang .chev { left: auto; right: 11px; }
+  .lang select {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--edge);
+    border-radius: 999px;
+    padding: 6px 32px 6px 34px;
+    cursor: pointer;
+  }
+  .lang select:hover { background: var(--glass-2); }
+  .lang select option { color: #140f1a; background: #fff; }
+
+  /* 标题区：居中，衬线大字，从左到右被光填满 */
+  .hero { text-align: center; padding: clamp(40px, 9vh, 104px) 0 0; }
+  .lead { margin: 0; font-size: clamp(16px, 1.5vw, 19px); font-weight: 600; color: var(--ink-2); line-height: 1.4; }
+  h1 {
+    margin: 18px auto 0;
+    max-width: 14em;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(44px, 7.4vw, 104px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+  :lang(zh-Hans) h1, :lang(zh-Hant) h1, :lang(ja) h1, :lang(ko) h1 { letter-spacing: 0.01em; line-height: 1.14; }
+  :lang(th) h1, :lang(hi) h1 { letter-spacing: 0; line-height: 1.35; font-family: var(--sans); }
+  :lang(ja) h1 { font-size: clamp(38px, 6vw, 84px); }
+  .next { margin: 20px 0 0; font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); font-weight: 500; line-height: 1.35; color: var(--ink-2); font-style: italic; }
+  :lang(zh-Hans) .next, :lang(zh-Hant) .next, :lang(ja) .next, :lang(ko) .next, :lang(th) .next, :lang(hi) .next { font-style: normal; }
+  :lang(th) .next, :lang(hi) .next { font-family: var(--sans); }
+  .about { margin: 22px auto 0; max-width: 34em; font-size: 17px; line-height: 1.65; color: var(--ink-2); text-wrap: balance; }
+
+  @property --fp { syntax: "<percentage>"; inherits: false; initial-value: -14%; }
+  @keyframes fp { from { --fp: -14%; } to { --fp: 114%; } }
+  .fill .c {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image:
+      linear-gradient(90deg, transparent calc(var(--fp, -14%) - 14%), var(--unlit) calc(var(--fp, -14%) + 14%)),
+      linear-gradient(180deg, var(--lit-1) 8%, var(--lit-2) 55%, var(--lit-3) 96%);
+    animation: fp calc(var(--w) * var(--u)) linear both;
+    animation-delay: calc(var(--k) * var(--u) + var(--d, 0ms));
+  }
+
+  /* 通行证 + 赞助方式 */
+  .stage {
+    margin-top: clamp(56px, 9vh, 96px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 400px);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  .pass-wrap { perspective: 1100px; display: grid; place-items: center; }
+  .pass {
+    --rx: 0deg;
+    --ry: 0deg;
+    --gx: 50%;
+    --gy: 30%;
+    position: relative;
+    width: min(100%, 500px);
+    aspect-ratio: 1.586;
+    border-radius: 24px;
+    padding: clamp(20px, 3.4vw, 32px);
+    color: var(--card-ink);
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(255, 79, 134, 0.22), transparent 55%),
+      radial-gradient(90% 80% at 0% 100%, rgba(255, 178, 122, 0.18), transparent 60%),
+      linear-gradient(150deg, var(--card-1), var(--card-2));
+    box-shadow: var(--shadow), inset 0 1px 0 var(--edge-hi), inset 0 0 0 1px var(--edge);
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transform-style: preserve-3d;
+    transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .pass.live { transition: transform .08s linear; }
+  .pass.idle { animation: sway 9s ease-in-out infinite; }
+  @keyframes sway {
+    0%, 100% { transform: rotateX(4deg) rotateY(-8deg); }
+    50% { transform: rotateX(-3deg) rotateY(8deg); }
+  }
+  /* 镭射膜：彩色斜纹随指针挪位置，再叠一层跟着指针走的高光 */
+  .pass .foil, .pass .glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+  .pass .foil {
+    z-index: -1;
+    opacity: var(--foil-alpha);
+    mix-blend-mode: var(--foil-blend);
+    background:
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.10) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(115deg, #ff8fb1 0%, #ffd29a 7%, #a6f0dc 14%, #9dbcff 21%, #d4a8ff 28%, #ff8fb1 35%);
+    background-size: 240% 240%;
+    background-position: var(--gx) var(--gy);
+    -webkit-mask-image: linear-gradient(120deg, transparent 8%, #000 40%, #000 60%, transparent 92%);
+    mask-image: linear-gradient(120deg, transparent 8%, #000 40%, #000 60%, transparent 92%);
+  }
+  .pass .glare { z-index: 3; background: radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, 0.38), transparent 42%); mix-blend-mode: overlay; }
+  .pass-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .pass-who { display: flex; align-items: center; gap: 12px; font-weight: 650; font-size: 16px; }
+  .pass-who img { width: 44px; height: 44px; border-radius: 50%; display: block; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); }
+  .pass-top .icon { width: 40px; height: 40px; display: block; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25)); }
+  .pass-title { align-self: end; font-family: var(--serif); font-weight: 700; font-size: clamp(22px, 3vw, 32px); line-height: 1.15; overflow-wrap: break-word; }
+  :lang(th) .pass-title, :lang(hi) .pass-title { font-family: var(--sans); line-height: 1.4; }
+  .pass-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-top: 10px; }
+  .pass-thanks { font-size: 14px; color: var(--card-ink-2); line-height: 1.4; }
+  .wave { display: flex; gap: 3px; align-items: center; height: 28px; flex: none; }
+  .wave i { width: 3px; border-radius: 2px; background: linear-gradient(180deg, var(--lit-1), var(--lit-3)); height: calc(var(--h) * 1%); }
+
+  .panel {
+    position: relative;
+    border-radius: 24px;
+    padding: 28px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    box-shadow: var(--shadow), inset 0 1px 0 var(--edge-hi), inset 0 0 0 1px var(--edge);
+  }
+  .panel h2 { margin: 0 0 18px; font-size: 15px; font-weight: 600; color: var(--ink-2); line-height: 1.4; }
+  .group-label { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .sponsor-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 12px 20px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--rose) 88%, #fff), var(--rose));
+    color: #fff;
+    font-weight: 650;
+    font-size: 16px;
+    text-decoration: none;
+    line-height: 1.25;
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 12px 30px -12px var(--rose);
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .sponsor-btn:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 0 4px color-mix(in srgb, var(--rose) 22%, transparent), 0 16px 36px -12px var(--rose); }
+  .sponsor-btn:active { transform: translateY(1px); }
+  .sponsor-btn svg { flex: none; }
+  .hint { margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+  .scan { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--edge); }
+  .qr { border-radius: 14px; }
+  .qr + .qr { margin-top: 8px; }
+  .qr summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    background: var(--glass-2);
+    box-shadow: inset 0 0 0 1px var(--edge);
+    transition: background-color .15s ease;
+  }
+  .qr summary::-webkit-details-marker { display: none; }
+  .qr summary:hover { background: color-mix(in srgb, var(--glass-2) 60%, var(--ink) 6%); }
+  .qr .mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; color: #fff; flex: none; }
+  .qr.alipay .mark { background: #1677ff; }
+  .qr.wechat .mark { background: #07c160; }
+  .qr .name { flex: 1; }
+  .qr .chev { color: var(--ink-2); transition: transform .2s ease; }
+  .qr[open] .chev { transform: rotate(180deg); }
+  .code { padding: 14px 4px 6px; text-align: center; }
+  .qr[open] .code { animation: open .4s cubic-bezier(.2, .8, .2, 1) both; }
+  @keyframes open { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+  .code img { display: block; width: 100%; max-width: 260px; height: auto; margin: 0 auto; border-radius: 12px; }
+  .code .hint { margin-top: 10px; }
+
+  /* 用途：三块玻璃，指针经过时边缘亮起一圈光 */
+  .section-head { margin: 0 0 22px; font-size: clamp(24px, 2.6vw, 32px); font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; font-family: var(--serif); }
+  :lang(th) .section-head, :lang(hi) .section-head { font-family: var(--sans); }
+  .uses { margin-top: clamp(96px, 14vh, 150px); }
+  .uses dl { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .tile {
+    --mx: 50%;
+    --my: 0%;
+    position: relative;
+    border-radius: 20px;
+    padding: 26px 24px 24px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: inset 0 1px 0 var(--edge-hi), inset 0 0 0 1px var(--edge);
+    overflow: hidden;
+  }
+  .tile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--mx) var(--my), var(--lit-2), transparent 60%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0;
+    transition: opacity .3s ease;
+    pointer-events: none;
+  }
+  .tile:hover::before { opacity: 1; }
+  .tile .glyph {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    margin-bottom: 22px;
+    background: linear-gradient(160deg, var(--lit-1), var(--lit-2) 60%, var(--lit-3));
+    box-shadow: 0 10px 24px -10px var(--lit-2);
+  }
+  .tile dt { font-size: 18px; font-weight: 650; line-height: 1.35; }
+  .tile dd { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+
+  /* Lyrimuse：左边介绍，右边一条刘海里的逐字歌词 */
+  .work { margin-top: clamp(96px, 14vh, 150px); }
+  .feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+    align-items: center;
+    border-radius: 28px;
+    padding: clamp(24px, 4vw, 48px);
+    background:
+      radial-gradient(80% 120% at 100% 0%, var(--glow-a), transparent 60%),
+      var(--glass);
+    box-shadow: var(--shadow), inset 0 1px 0 var(--edge-hi), inset 0 0 0 1px var(--edge);
+    overflow: hidden;
+  }
+  .feature .head { display: flex; align-items: center; gap: 16px; }
+  .feature .head img { width: 72px; height: 72px; display: block; filter: drop-shadow(0 12px 24px rgba(226, 51, 111, 0.35)); }
+  .feature h3 { margin: 0; font-size: 30px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+  .feature p { margin: 18px 0 0; font-size: 16px; line-height: 1.65; color: var(--ink-2); max-width: 30em; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    background: var(--glass-2);
+    box-shadow: inset 0 0 0 1px var(--edge);
+  }
+  .links a:first-child { background: var(--ink); color: var(--bg); box-shadow: none; }
+  .links a:hover { box-shadow: inset 0 0 0 1px var(--ink-2); }
+  .links a:first-child:hover { opacity: .86; }
+  .notch-demo { position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; background: linear-gradient(160deg, #ffd6e2, #f7b8c9 40%, #c9a6e8); box-shadow: inset 0 0 0 1px var(--edge); }
+  .notch-demo .bar { position: absolute; inset: 0 0 auto 0; height: 22px; background: rgba(255, 255, 255, 0.45); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .notch-demo .island {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 62%;
+    max-width: 92%;
+    padding: 7px 20px 10px;
+    border-radius: 0 0 18px 18px;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    font-size: clamp(13px, 1.4vw, 16px);
+    line-height: 1.35;
+    box-shadow: 0 16px 30px -12px rgba(0, 0, 0, 0.5);
+  }
+  .notch-demo .island .fill .c { background-image: linear-gradient(90deg, transparent calc(var(--fp, -14%) - 14%), #5a5560 calc(var(--fp, -14%) + 14%)), linear-gradient(180deg, #fff, #ffd2e0); }
+  .notch-demo .desk { position: absolute; left: 8%; right: 8%; bottom: 12%; text-align: center; font-weight: 800; font-size: clamp(16px, 2vw, 24px); color: #fff; text-shadow: 0 2px 14px rgba(120, 20, 60, 0.45); line-height: 1.3; }
+  .more { display: inline-block; margin-top: 22px; font-size: 15px; color: var(--ink-2); text-underline-offset: 3px; }
+  .more:hover { color: var(--ink); }
+
+  footer { margin-top: 96px; padding: 26px 0 40px; font-size: 13px; color: var(--ink-2); border-top: 1px solid var(--edge); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+  footer p { margin: 0; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* 滚到才出现：只在脚本跑起来、且没要求减少动态效果时生效 */
+  .rv-on .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i, 0) * 90ms); }
+  .rv-on .rv.in { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .stage { grid-template-columns: minmax(0, 1fr); }
+    .panel { max-width: 520px; width: 100%; justify-self: center; }
+    .uses dl { grid-template-columns: minmax(0, 1fr); }
+    .feature { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .hero { padding-top: 32px; }
+    .pass { border-radius: 18px; }
+    .pass-who img { width: 36px; height: 36px; }
+    .pass-top .icon { width: 32px; height: 32px; }
+    .panel { padding: 22px; }
+    .stage { margin-top: 40px; gap: 28px; }
+    .pass { width: min(100%, 360px); }
+    footer { margin-top: 64px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fill .c { animation: none; --fp: 114%; }
+    .sky::before, .sky::after { animation: none; }
+    .pass, .pass.idle { animation: none; transition: none; }
+    .qr[open] .code { animation: none; }
+    .rv-on .rv { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="who" href="https://github.com/Yudaotor"><img src="../assets/avatar.jpg" alt="" width="32" height="32"><span>Yudaotor</span></a>
+    <label class="lang">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm-6.5 6.5h13M8 1.5c1.8 1.8 2.7 4 2.7 6.5S9.8 12.7 8 14.5M8 1.5C6.2 3.3 5.3 5.5 5.3 8s.9 4.7 2.7 6.5"/></svg>
+      <select id="lang" aria-label="语言" data-i18n-aria="language">
+        <option value="zh-Hans">简体中文</option>
+        <option value="zh-Hant">繁體中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="pt-BR">Português (Brasil)</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="ru">Русский</option>
+        <option value="uk">Українська</option>
+        <option value="th">ไทย</option>
+        <option value="tr">Türkçe</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+      <svg class="chev" width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </label>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <p class="lead" data-i18n="lead">用得顺手的话</p>
+      <h1 id="title" data-i18n="title">请作者喝杯咖啡</h1>
+      <p class="next" data-i18n="thanks">多少都是心意</p>
+      <p class="about" data-i18n="about">我是Yudaotor，业余写开源软件，Lyrimuse就是我做的</p>
+    </section>
+
+    <div class="stage">
+      <div class="pass-wrap" aria-hidden="true">
+        <div class="pass idle" id="pass">
+          <span class="foil"></span>
+          <div class="pass-top">
+            <div class="pass-who"><img src="../assets/avatar.jpg" alt="" width="44" height="44"><span>Yudaotor</span></div>
+            <img class="icon" src="../assets/lyrimuse.png" alt="" width="40" height="40">
+          </div>
+          <div class="pass-title" data-i18n="title">请作者喝杯咖啡</div>
+          <div class="pass-foot">
+            <span class="pass-thanks" data-i18n="thanks">多少都是心意</span>
+            <span class="wave"><i style="--h:30"></i><i style="--h:62"></i><i style="--h:100"></i><i style="--h:46"></i><i style="--h:78"></i><i style="--h:34"></i><i style="--h:88"></i><i style="--h:52"></i><i style="--h:24"></i><i style="--h:70"></i><i style="--h:40"></i></span>
+          </div>
+          <span class="glare"></span>
+        </div>
+      </div>
+
+      <aside class="panel" aria-labelledby="pay-heading">
+        <h2 id="pay-heading" data-i18n="payHeading">赞助方式</h2>
+        <div class="group-label">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          <span>GitHub Sponsors</span>
+        </div>
+        <a class="sponsor-btn" href="https://github.com/sponsors/Yudaotor"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M7.655 14.916v-.001h-.002l-.006-.003-.018-.01a22.066 22.066 0 0 1-3.744-2.584C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.094 22.094 0 0 1-3.744 2.584l-.018.01-.006.003h-.002a.75.75 0 0 1-.69 0Z"/></svg><span data-i18n="sponsor">在GitHub上赞助</span></a>
+        <p class="hint" data-i18n="sponsorHint">用GitHub账号赞助，按月或一次性都可以</p>
+
+        <div class="scan">
+          <div class="group-label" data-i18n="scanGroup">扫码支付</div>
+          <details class="qr alipay" id="alipay" name="qr">
+            <summary><span class="mark"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg></span><span class="name" data-i18n="alipay">支付宝</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="code">
+              <img src="../assets/alipay.jpg" alt="支付宝收款码" data-i18n-alt="alipayAlt" loading="lazy" width="1280" height="1919">
+              <p class="hint" data-i18n="alipayHint">打开支付宝扫一扫</p>
+            </div>
+          </details>
+          <details class="qr wechat" id="wechat" name="qr">
+            <summary><span class="mark"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg></span><span class="name" data-i18n="wechat">微信支付</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="code">
+              <img src="../assets/wechat.jpg" alt="微信收款码" data-i18n-alt="wechatAlt" loading="lazy" width="828" height="1124">
+              <p class="hint" data-i18n="wechatHint">打开微信扫一扫</p>
+            </div>
+          </details>
+        </div>
+      </aside>
+    </div>
+
+    <section class="uses" aria-labelledby="uses-heading">
+      <h2 class="section-head rv" id="uses-heading" data-i18n="usesHeading">钱会用在这几件事上</h2>
+      <dl>
+        <div class="tile rv" style="--i:0">
+          <span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M3 14v-4M7.5 17V7M12 20V4M16.5 16V8M21 13v-2"/></svg></span>
+          <dt data-i18n="use1Title">Last.fm Pro订阅</dt>
+          <dd data-i18n="use1Body">12月1日起Last.fm的接口要Pro才能用，订上之后Lyrimuse里的Scrobble和统计才能继续用</dd>
+        </div>
+        <div class="tile rv" style="--i:1">
+          <span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3.3-3.3a4 4 0 0 0-5-5L3 11l8-8 1.7 1.7a4 4 0 0 0 2 1.6Z"/></svg></span>
+          <dt data-i18n="use2Title">更新和维护</dt>
+          <dd data-i18n="use2Body">适配新播放器、修问题、跟上新系统</dd>
+        </div>
+        <div class="tile rv" style="--i:2">
+          <span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Zm12 1h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5c-.6.8-.6 1.7 0 2.5M12 3.5c-.6.8-.6 1.7 0 2.5"/></svg></span>
+          <dt data-i18n="use3Title">咖啡</dt>
+          <dd data-i18n="use3Body">当然是咖啡续命啦</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="work" aria-labelledby="work-heading">
+      <h2 class="section-head rv" id="work-heading" data-i18n="projectsHeading">我在做的</h2>
+      <div class="feature rv">
+        <div>
+          <div class="head">
+            <img src="../assets/lyrimuse.png" alt="" width="72" height="72">
+            <h3>Lyrimuse</h3>
+          </div>
+          <p data-i18n="lyrimuseDesc">免费开源的Mac桌面歌词软件，支持Apple Music、Spotify、QQ音乐、网易云音乐等播放器的逐字歌词</p>
+          <div class="links">
+            <a id="site-link" href="https://yudaotor.github.io/lyrimuse/zh/" data-i18n="website">官网</a>
+            <a href="https://github.com/Yudaotor/lyrimuse" data-i18n="source">源代码</a>
+          </div>
+        </div>
+        <div class="notch-demo" aria-hidden="true">
+          <div class="bar"></div>
+          <div class="island"><span id="notch-line" data-i18n="title">请作者喝杯咖啡</span></div>
+          <div class="desk" data-i18n="thanks">多少都是心意</div>
+        </div>
+      </div>
+      <a class="more" href="https://github.com/Yudaotor?tab=repositories" data-i18n="moreProjects">GitHub上的其他项目</a>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Yudaotor</p>
+    <nav><a href="https://github.com/Yudaotor">github.com/Yudaotor</a></nav>
+  </div>
+</footer>
+
+<script>
+// 界面语言跟 Lyrimuse 的 16 种一致：?lang=ja 之类优先，否则按浏览器语言列表挨个找；中文按简繁分，pt 开头用 pt-BR，其它按前两位字母找，都没有就用英文。词典和 match() / pick() 与 index.html 同一份。
+(function () {
+  var T = {
+    "zh-Hans": {
+      pageTitle: "请作者喝杯咖啡 ☕", description: "如果这个小项目对你有帮助，欢迎请作者喝杯咖啡", language: "语言",
+      lead: "用得顺手的话", title: "请作者喝杯咖啡",
+      about: "我是Yudaotor，业余写开源软件，Lyrimuse就是我做的",
+      payHeading: "赞助方式", sponsor: "在GitHub上赞助", sponsorHint: "用GitHub账号赞助，按月或一次性都可以",
+      scanGroup: "扫码支付",
+      alipay: "支付宝", alipayAlt: "支付宝收款码", alipayHint: "打开支付宝扫一扫",
+      wechat: "微信支付", wechatAlt: "微信收款码", wechatHint: "打开微信扫一扫",
+      usesHeading: "钱会用在这几件事上",
+      use1Title: "Last.fm Pro订阅", use1Body: "12月1日起Last.fm的接口要Pro才能用，订上之后Lyrimuse里的Scrobble和统计才能继续用",
+      use2Title: "更新和维护", use2Body: "适配新播放器、修问题、跟上新系统",
+      use3Title: "咖啡", use3Body: "当然是咖啡续命啦",
+      projectsHeading: "我在做的", lyrimuseDesc: "免费开源的Mac桌面歌词软件，支持Apple Music、Spotify、QQ音乐、网易云音乐等播放器的逐字歌词",
+      website: "官网", source: "源代码", moreProjects: "GitHub上的其他项目", thanks: "多少都是心意"
+    },
+    "zh-Hant": {
+      pageTitle: "請作者喝杯咖啡 ☕", description: "如果這個小專案對你有幫助，歡迎請作者喝杯咖啡", language: "語言",
+      lead: "用得順手的話", title: "請作者喝杯咖啡",
+      about: "我是Yudaotor，業餘寫開源軟體，Lyrimuse就是我做的",
+      payHeading: "贊助方式", sponsor: "在GitHub上贊助", sponsorHint: "用GitHub帳號贊助，按月或一次性都可以",
+      scanGroup: "掃碼支付",
+      alipay: "支付寶", alipayAlt: "支付寶收款碼", alipayHint: "打開支付寶掃一掃",
+      wechat: "微信支付", wechatAlt: "微信收款碼", wechatHint: "打開微信掃一掃",
+      usesHeading: "錢會用在這幾件事上",
+      use1Title: "Last.fm Pro訂閱", use1Body: "12月1日起Last.fm的介面要Pro才能用，訂上之後Lyrimuse裡的Scrobble和統計才能繼續用",
+      use2Title: "更新和維護", use2Body: "適配新播放器、修問題、跟上新系統",
+      use3Title: "咖啡", use3Body: "當然是咖啡續命啦",
+      projectsHeading: "我在做的", lyrimuseDesc: "免費開源的Mac桌面歌詞軟體，支援Apple Music、Spotify、QQ音樂、網易雲音樂等播放器的逐字歌詞",
+      website: "官網", source: "原始碼", moreProjects: "GitHub上的其他專案", thanks: "多少都是心意"
+    },
+    "en": {
+      pageTitle: "Buy the author a coffee ☕", description: "If this little project helped you, you're welcome to buy the author a coffee.", language: "Language",
+      lead: "If it's been useful", title: "Buy the author a coffee",
+      about: "I'm Yudaotor. I write open-source software in my spare time, and Lyrimuse is mine.",
+      payHeading: "Ways to give", sponsor: "Sponsor on GitHub", sponsorHint: "Sponsor with your GitHub account, monthly or one\u2011time.",
+      scanGroup: "Scan a QR code",
+      alipay: "Alipay", alipayAlt: "Alipay QR code", alipayHint: "Scan with Alipay",
+      wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR code", wechatHint: "Scan with WeChat",
+      usesHeading: "Where the money goes",
+      use1Title: "Last.fm Pro subscription", use1Body: "From December 1, Last.fm's API requires Pro. Once I subscribe, scrobbling and stats in Lyrimuse can keep working.",
+      use2Title: "Updates and upkeep", use2Body: "Supporting new players, fixing bugs, keeping up with new macOS releases.",
+      use3Title: "Coffee", use3Body: "Coffee, obviously. It keeps me going.",
+      projectsHeading: "What I'm working on", lyrimuseDesc: "Free, open-source desktop lyrics for the Mac, synced word by word for Apple Music, Spotify, YouTube Music and many other players.",
+      website: "Website", source: "Source code", moreProjects: "More projects on GitHub", thanks: "Any amount means a lot"
+    },
+    "ja": {
+      pageTitle: "作者にコーヒーをおごる ☕", description: "この小さなプロジェクトが役に立ったら、作者にコーヒーを一杯おごってください。", language: "言語",
+      lead: "役に立ったなら", title: "作者にコーヒーをおごる",
+      about: "Yudaotorです。趣味でオープンソースソフトを作っていて、Lyrimuseもその一つです。",
+      payHeading: "支援の方法", sponsor: "GitHubで支援する", sponsorHint: "GitHubアカウントで、毎月または1回だけ支援できます。",
+      scanGroup: "QRコードで支払う",
+      alipay: "Alipay", alipayAlt: "AlipayのQRコード", alipayHint: "Alipayでスキャン",
+      wechat: "WeChat Pay", wechatAlt: "WeChat PayのQRコード", wechatHint: "WeChatでスキャン",
+      usesHeading: "お金の使い道",
+      use1Title: "Last.fm Proの購読", use1Body: "12月1日からLast.fmのAPIはProでないと使えなくなります。購読すれば、LyrimuseのScrobbleと統計をこれからも使えます。",
+      use2Title: "アップデートとメンテナンス", use2Body: "新しいプレーヤーへの対応、不具合の修正、新しいmacOSへの追従。",
+      use3Title: "コーヒー", use3Body: "もちろんコーヒーです。これで頑張れます。",
+      projectsHeading: "取り組んでいるもの", lyrimuseDesc: "Mac向けの無料・オープンソースのデスクトップ歌詞アプリ。Apple Music、Spotify、YouTube Musicなど多くのプレーヤーで、歌詞を1語ずつ表示します。",
+      website: "公式サイト", source: "ソースコード", moreProjects: "GitHubのほかのプロジェクト", thanks: "いくらでも気持ちがうれしいです"
+    },
+    "ko": {
+      pageTitle: "개발자에게 커피 한 잔 사기 ☕", description: "이 작은 프로젝트가 도움이 되었다면 개발자에게 커피 한 잔을 사 주십시오.", language: "언어",
+      lead: "도움이 되었다면", title: "개발자에게 커피 한 잔 사기",
+      about: "Yudaotor입니다. 취미로 오픈 소스 소프트웨어를 만들고 있고, Lyrimuse도 그중 하나입니다.",
+      payHeading: "후원 방법", sponsor: "GitHub에서 후원하기", sponsorHint: "GitHub 계정으로 매월 또는 한 번만 후원할 수 있습니다.",
+      scanGroup: "QR 코드로 결제",
+      alipay: "알리페이", alipayAlt: "알리페이 QR 코드", alipayHint: "알리페이 앱으로 스캔하십시오",
+      wechat: "위챗페이", wechatAlt: "위챗페이 QR 코드", wechatHint: "위챗 앱으로 스캔하십시오",
+      usesHeading: "후원금은 이렇게 써요",
+      use1Title: "Last.fm Pro 구독", use1Body: "12월 1일부터 Last.fm API는 Pro여야 쓸 수 있어요. 구독하면 Lyrimuse의 Scrobble과 통계를 계속 쓸 수 있습니다.",
+      use2Title: "업데이트와 유지보수", use2Body: "새 플레이어 지원, 버그 수정, 새 macOS 대응.",
+      use3Title: "커피", use3Body: "당연히 커피죠. 커피로 버팁니다.",
+      projectsHeading: "만들고 있는 것", lyrimuseDesc: "Mac용 무료 오픈 소스 데스크톱 가사 앱입니다. Apple Music, Spotify, YouTube Music 등 여러 플레이어의 가사를 단어 단위로 맞춰 보여 줍니다.",
+      website: "웹사이트", source: "소스 코드", moreProjects: "GitHub의 다른 프로젝트", thanks: "얼마든 마음만으로 충분해요"
+    },
+    "es": {
+      pageTitle: "Invita al autor a un café ☕", description: "Si este pequeño proyecto te ha ayudado, puedes invitar al autor a un café.", language: "Idioma",
+      lead: "Si te ha resultado útil", title: "Invita al autor a un café",
+      about: "Soy Yudaotor. Escribo software de código abierto en mis ratos libres, y Lyrimuse es obra mía.",
+      payHeading: "Formas de apoyar", sponsor: "Patrocinar en GitHub", sponsorHint: "Patrocina con tu cuenta de GitHub, cada mes o una sola vez.",
+      scanGroup: "Escanear un código QR",
+      alipay: "Alipay", alipayAlt: "Código QR de Alipay", alipayHint: "Escanéalo con Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Código QR de WeChat Pay", wechatHint: "Escanéalo con WeChat",
+      usesHeading: "En qué se usa el dinero",
+      use1Title: "Suscripción a Last.fm Pro", use1Body: "Desde el 1 de diciembre, la API de Last.fm exige Pro. Con la suscripción, el scrobbling y las estadísticas de Lyrimuse seguirán funcionando.",
+      use2Title: "Actualizaciones y mantenimiento", use2Body: "Compatibilidad con nuevos reproductores, corrección de errores y adaptación a las nuevas versiones de macOS.",
+      use3Title: "Café", use3Body: "Café, por supuesto. Es lo que me mantiene en pie.",
+      projectsHeading: "En qué estoy trabajando", lyrimuseDesc: "Letras en el escritorio del Mac, gratuitas y de código abierto, sincronizadas palabra por palabra con Apple Music, Spotify, YouTube Music y muchos otros reproductores.",
+      website: "Sitio web", source: "Código fuente", moreProjects: "Más proyectos en GitHub", thanks: "Lo que quieras dar es de agradecer"
+    },
+    "fr": {
+      pageTitle: "Offrir un café à l’auteur ☕", description: "Si ce petit projet vous a été utile, vous pouvez offrir un café à l’auteur.", language: "Langue",
+      lead: "Si ça vous est utile", title: "Offrir un café à l’auteur",
+      about: "Je suis Yudaotor. J'écris des logiciels open source sur mon temps libre, et Lyrimuse en fait partie.",
+      payHeading: "Comment soutenir", sponsor: "Soutenir sur GitHub", sponsorHint: "Soutenez avec votre compte GitHub, chaque mois ou une seule fois.",
+      scanGroup: "Scanner un code QR",
+      alipay: "Alipay", alipayAlt: "Code QR Alipay", alipayHint: "Scannez avec Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Code QR WeChat Pay", wechatHint: "Scannez avec WeChat",
+      usesHeading: "À quoi sert l'argent",
+      use1Title: "Abonnement Last.fm Pro", use1Body: "Depuis le 1er décembre, l'API de Last.fm exige un abonnement Pro. Une fois abonné, le scrobbling et les statistiques de Lyrimuse continueront de fonctionner.",
+      use2Title: "Mises à jour et maintenance", use2Body: "Prise en charge de nouveaux lecteurs, corrections de bugs, suivi des nouvelles versions de macOS.",
+      use3Title: "Café", use3Body: "Du café, bien sûr. C'est ce qui me fait tenir.",
+      projectsHeading: "Ce sur quoi je travaille", lyrimuseDesc: "Des paroles sur le bureau du Mac, gratuites et open source, synchronisées mot à mot avec Apple Music, Spotify, YouTube Music et bien d’autres lecteurs.",
+      website: "Site web", source: "Code source", moreProjects: "Autres projets sur GitHub", thanks: "Peu importe le montant, c'est le geste qui compte"
+    },
+    "de": {
+      pageTitle: "Spendier dem Autor einen Kaffee ☕", description: "Wenn dir dieses kleine Projekt geholfen hat, kannst du dem Autor gern einen Kaffee spendieren.", language: "Sprache",
+      lead: "Wenn es dir nützt", title: "Spendier dem Autor einen Kaffee",
+      about: "Ich bin Yudaotor. In meiner Freizeit schreibe ich Open-Source-Software, und Lyrimuse ist von mir.",
+      payHeading: "So kannst du unterstützen", sponsor: "Auf GitHub unterstützen", sponsorHint: "Unterstütze mit deinem GitHub-Account, monatlich oder einmalig.",
+      scanGroup: "QR-Code scannen",
+      alipay: "Alipay", alipayAlt: "Alipay-QR-Code", alipayHint: "Mit Alipay scannen",
+      wechat: "WeChat Pay", wechatAlt: "WeChat-Pay-QR-Code", wechatHint: "Mit WeChat scannen",
+      usesHeading: "Wofür das Geld gebraucht wird",
+      use1Title: "Last.fm-Pro-Abo", use1Body: "Seit dem 1. Dezember braucht man für die Last.fm-API Pro. Mit dem Abo laufen Scrobbling und Statistiken in Lyrimuse weiter.",
+      use2Title: "Updates und Pflege", use2Body: "Neue Player unterstützen, Fehler beheben, mit neuen macOS-Versionen Schritt halten.",
+      use3Title: "Kaffee", use3Body: "Natürlich Kaffee. Der hält mich am Laufen.",
+      projectsHeading: "Woran ich arbeite", lyrimuseDesc: "Kostenlose Open-Source-Desktop-Lyrics für den Mac, Wort für Wort synchron mit Apple Music, Spotify, YouTube Music und vielen weiteren Playern.",
+      website: "Website", source: "Quellcode", moreProjects: "Weitere Projekte auf GitHub", thanks: "Jeder Betrag freut mich"
+    },
+    "it": {
+      pageTitle: "Offri un caffè all’autore ☕", description: "Se questo piccolo progetto ti è stato utile, puoi offrire un caffè all’autore.", language: "Lingua",
+      lead: "Se ti è stato utile", title: "Offri un caffè all’autore",
+      about: "Sono Yudaotor. Scrivo software open source nel tempo libero, e Lyrimuse è opera mia.",
+      payHeading: "Come sostenere", sponsor: "Sostieni su GitHub", sponsorHint: "Sostieni con il tuo account GitHub, ogni mese o una volta sola.",
+      scanGroup: "Scansiona un codice QR",
+      alipay: "Alipay", alipayAlt: "Codice QR Alipay", alipayHint: "Scansiona con Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Codice QR WeChat Pay", wechatHint: "Scansiona con WeChat",
+      usesHeading: "A cosa servono i soldi",
+      use1Title: "Abbonamento a Last.fm Pro", use1Body: "Dal 1° dicembre l'API di Last.fm richiede Pro. Con l'abbonamento, scrobbling e statistiche di Lyrimuse continueranno a funzionare.",
+      use2Title: "Aggiornamenti e manutenzione", use2Body: "Supporto per nuovi player, correzione di bug, adeguamento alle nuove versioni di macOS.",
+      use3Title: "Caffè", use3Body: "Caffè, ovviamente. È quello che mi tiene in piedi.",
+      projectsHeading: "A cosa sto lavorando", lyrimuseDesc: "Testi sul desktop del Mac, gratuiti e open source, sincronizzati parola per parola con Apple Music, Spotify, YouTube Music e molti altri player.",
+      website: "Sito web", source: "Codice sorgente", moreProjects: "Altri progetti su GitHub", thanks: "Qualsiasi cifra è un bel gesto"
+    },
+    "pt-BR": {
+      pageTitle: "Pague um café ao autor ☕", description: "Se este pequeno projeto foi útil para você, que tal pagar um café ao autor?", language: "Idioma",
+      lead: "Se foi útil para você", title: "Pague um café ao autor",
+      about: "Sou o Yudaotor. Escrevo software de código aberto nas horas vagas, e o Lyrimuse é meu.",
+      payHeading: "Formas de apoiar", sponsor: "Patrocinar no GitHub", sponsorHint: "Patrocine com sua conta do GitHub, todo mês ou uma única vez.",
+      scanGroup: "Escanear um código QR",
+      alipay: "Alipay", alipayAlt: "Código QR do Alipay", alipayHint: "Escaneie com o Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Código QR do WeChat Pay", wechatHint: "Escaneie com o WeChat",
+      usesHeading: "Para onde vai o dinheiro",
+      use1Title: "Assinatura do Last.fm Pro", use1Body: "A partir de 1º de dezembro, a API do Last.fm exige Pro. Com a assinatura, o scrobbling e as estatísticas do Lyrimuse continuam funcionando.",
+      use2Title: "Atualizações e manutenção", use2Body: "Suporte a novos players, correção de bugs e adaptação às novas versões do macOS.",
+      use3Title: "Café", use3Body: "Café, claro. É ele que me mantém de pé.",
+      projectsHeading: "No que estou trabalhando", lyrimuseDesc: "Letras na área de trabalho do Mac, gratuitas e de código aberto, sincronizadas palavra por palavra com Apple Music, Spotify, YouTube Music e muitos outros players.",
+      website: "Site", source: "Código-fonte", moreProjects: "Mais projetos no GitHub", thanks: "Qualquer valor é um carinho"
+    },
+    "vi": {
+      pageTitle: "Mời tác giả một ly cà phê ☕", description: "Nếu dự án nhỏ này giúp ích cho bạn, hãy mời tác giả một ly cà phê.", language: "Ngôn ngữ",
+      lead: "Nếu bạn thấy hữu ích", title: "Mời tác giả một ly cà phê",
+      about: "Tôi là Yudaotor. Tôi viết phần mềm mã nguồn mở lúc rảnh, và Lyrimuse là sản phẩm của tôi.",
+      payHeading: "Cách tài trợ", sponsor: "Tài trợ trên GitHub", sponsorHint: "Tài trợ bằng tài khoản GitHub, hằng tháng hoặc một lần.",
+      scanGroup: "Quét mã QR",
+      alipay: "Alipay", alipayAlt: "Mã QR Alipay", alipayHint: "Quét bằng Alipay",
+      wechat: "WeChat Pay", wechatAlt: "Mã QR WeChat Pay", wechatHint: "Quét bằng WeChat",
+      usesHeading: "Tiền được dùng vào đâu",
+      use1Title: "Gói Last.fm Pro", use1Body: "Từ ngày 1 tháng 12, API của Last.fm yêu cầu Pro. Đăng ký rồi thì Scrobble và thống kê trong Lyrimuse mới dùng tiếp được.",
+      use2Title: "Cập nhật và bảo trì", use2Body: "Hỗ trợ trình phát mới, sửa lỗi, theo kịp macOS mới.",
+      use3Title: "Cà phê", use3Body: "Tất nhiên là cà phê rồi. Có nó mới có sức làm tiếp.",
+      projectsHeading: "Dự án tôi đang làm", lyrimuseDesc: "Ứng dụng lời bài hát trên màn hình Mac, miễn phí và mã nguồn mở, hiện lời theo từng chữ cho Apple Music, Spotify, YouTube Music và nhiều trình phát khác.",
+      website: "Trang web", source: "Mã nguồn", moreProjects: "Các dự án khác trên GitHub", thanks: "Bao nhiêu cũng là tấm lòng"
+    },
+    "ru": {
+      pageTitle: "Угостить автора кофе ☕", description: "Если этот небольшой проект вам пригодился, можете угостить автора кофе.", language: "Язык",
+      lead: "Если пригодилось", title: "Угостить автора кофе",
+      about: "Я Yudaotor. В свободное время пишу программы с открытым кодом, и Lyrimuse — моя.",
+      payHeading: "Как поддержать", sponsor: "Поддержать на GitHub", sponsorHint: "Поддержите через аккаунт GitHub — ежемесячно или разово.",
+      scanGroup: "Оплата по QR-коду",
+      alipay: "Alipay", alipayAlt: "QR-код Alipay", alipayHint: "Отсканируйте в Alipay",
+      wechat: "WeChat Pay", wechatAlt: "QR-код WeChat Pay", wechatHint: "Отсканируйте в WeChat",
+      usesHeading: "На что пойдут деньги",
+      use1Title: "Подписка Last.fm Pro", use1Body: "С 1 декабря API Last.fm работает только с Pro. После оформления подписки Scrobble и статистика в Lyrimuse продолжат работать.",
+      use2Title: "Обновления и поддержка", use2Body: "Поддержка новых плееров, исправление ошибок, совместимость с новыми версиями macOS.",
+      use3Title: "Кофе", use3Body: "Конечно, кофе. На нём всё и держится.",
+      projectsHeading: "Над чем я работаю", lyrimuseDesc: "Бесплатные тексты песен на рабочем столе Mac с открытым кодом: пословная синхронизация для Apple Music, Spotify, YouTube Music и многих других плееров.",
+      website: "Сайт", source: "Исходный код", moreProjects: "Другие проекты на GitHub", thanks: "Любая сумма — уже радость"
+    },
+    "uk": {
+      pageTitle: "Пригостити автора кавою ☕", description: "Якщо цей невеликий проєкт став вам у пригоді, можете пригостити автора кавою.", language: "Мова",
+      lead: "Якщо стало в пригоді", title: "Пригостити автора кавою",
+      about: "Я Yudaotor. У вільний час пишу програми з відкритим кодом, і Lyrimuse — моя.",
+      payHeading: "Як підтримати", sponsor: "Підтримати на GitHub", sponsorHint: "Підтримайте через обліковий запис GitHub — щомісяця або одноразово.",
+      scanGroup: "Оплата за QR-кодом",
+      alipay: "Alipay", alipayAlt: "QR-код Alipay", alipayHint: "Відскануйте в Alipay",
+      wechat: "WeChat Pay", wechatAlt: "QR-код WeChat Pay", wechatHint: "Відскануйте у WeChat",
+      usesHeading: "На що підуть гроші",
+      use1Title: "Підписка Last.fm Pro", use1Body: "З 1 грудня API Last.fm працює лише з Pro. Після оформлення підписки Scrobble і статистика в Lyrimuse продовжать працювати.",
+      use2Title: "Оновлення та підтримка", use2Body: "Підтримка нових плеєрів, виправлення помилок, сумісність з новими версіями macOS.",
+      use3Title: "Кава", use3Body: "Звісно, кава. На ній усе й тримається.",
+      projectsHeading: "Над чим я працюю", lyrimuseDesc: "Безкоштовні тексти пісень на робочому столі Mac із відкритим кодом: пословна синхронізація для Apple Music, Spotify, YouTube Music та багатьох інших плеєрів.",
+      website: "Сайт", source: "Вихідний код", moreProjects: "Інші проєкти на GitHub", thanks: "Будь-яка сума — уже радість"
+    },
+    "th": {
+      pageTitle: "เลี้ยงกาแฟผู้พัฒนา ☕", description: "หากโปรเจกต์เล็กๆ นี้มีประโยชน์กับคุณ เลี้ยงกาแฟผู้พัฒนาสักแก้วได้", language: "ภาษา",
+      lead: "ถ้าใช้แล้วถูกใจ", title: "เลี้ยงกาแฟผู้พัฒนา",
+      about: "Yudaotor เองครับ เขียนโอเพนซอร์สเป็นงานอดิเรก และ Lyrimuse ก็เป็นผลงานของผมเอง",
+      payHeading: "ช่องทางการสนับสนุน", sponsor: "สนับสนุนบน GitHub", sponsorHint: "สนับสนุนด้วยบัญชี GitHub ได้ทั้งรายเดือนและครั้งเดียว",
+      scanGroup: "สแกนคิวอาร์โค้ด",
+      alipay: "Alipay", alipayAlt: "คิวอาร์โค้ด Alipay", alipayHint: "สแกนด้วย Alipay",
+      wechat: "WeChat Pay", wechatAlt: "คิวอาร์โค้ด WeChat Pay", wechatHint: "สแกนด้วย WeChat",
+      usesHeading: "เงินจะถูกใช้กับอะไร",
+      use1Title: "ค่าสมาชิก Last.fm Pro", use1Body: "ตั้งแต่ 1 ธันวาคม API ของ Last.fm ต้องใช้ Pro เมื่อสมัครแล้ว Scrobble และสถิติใน Lyrimuse ก็จะใช้งานต่อได้",
+      use2Title: "อัปเดตและดูแลรักษา", use2Body: "รองรับเครื่องเล่นใหม่ แก้บั๊ก และปรับตามระบบใหม่",
+      use3Title: "กาแฟ", use3Body: "ก็ต้องกาแฟสิ ช่วยให้ผมสู้ต่อได้",
+      projectsHeading: "สิ่งที่กำลังทำอยู่", lyrimuseDesc: "แอปเนื้อเพลงบนเดสก์ท็อป Mac ใช้ฟรีและเป็นโอเพนซอร์ส แสดงเนื้อเพลงทีละคำสำหรับ Apple Music, Spotify, YouTube Music และเครื่องเล่นอื่นๆ อีกมาก",
+      website: "เว็บไซต์", source: "ซอร์สโค้ด", moreProjects: "โปรเจกต์อื่นบน GitHub", thanks: "มากน้อยแค่ไหนก็เป็นน้ำใจ"
+    },
+    "tr": {
+      pageTitle: "Geliştiriciye bir kahve ısmarlayın ☕", description: "Bu küçük proje işinize yaradıysa geliştiriciye bir kahve ısmarlayabilirsiniz.", language: "Dil",
+      lead: "İşinize yaradıysa", title: "Geliştiriciye bir kahve ısmarlayın",
+      about: "Ben Yudaotor. Boş zamanlarımda açık kaynak yazılım geliştiriyorum, Lyrimuse de benim işim.",
+      payHeading: "Destek yolları", sponsor: "GitHub’da destek olun", sponsorHint: "GitHub hesabınızla aylık ya da tek seferlik destek olabilirsiniz.",
+      scanGroup: "QR kodu tarayın",
+      alipay: "Alipay", alipayAlt: "Alipay QR kodu", alipayHint: "Alipay ile tarayın",
+      wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR kodu", wechatHint: "WeChat ile tarayın",
+      usesHeading: "Para nereye gidiyor",
+      use1Title: "Last.fm Pro aboneliği", use1Body: "1 Aralık'tan itibaren Last.fm API'si Pro gerektiriyor. Abonelik yapılınca Lyrimuse'taki Scrobble ve istatistikler çalışmaya devam eder.",
+      use2Title: "Güncelleme ve bakım", use2Body: "Yeni oynatıcılara uyum, hata düzeltme, yeni macOS sürümlerine ayak uydurma.",
+      use3Title: "Kahve", use3Body: "Tabii ki kahve. Beni ayakta tutan o.",
+      projectsHeading: "Üzerinde çalıştıklarım", lyrimuseDesc: "Mac için ücretsiz ve açık kaynak masaüstü şarkı sözleri: Apple Music, Spotify, YouTube Music ve daha birçok oynatıcı için kelime kelime senkronize sözler.",
+      website: "Web sitesi", source: "Kaynak kodu", moreProjects: "GitHub’daki diğer projeler", thanks: "Ne kadar olursa olsun, düşünmeniz yeter"
+    },
+    "hi": {
+      pageTitle: "डेवलपर को एक कॉफ़ी पिलाएँ ☕", description: "अगर यह छोटा-सा प्रोजेक्ट आपके काम आया, तो डेवलपर को एक कॉफ़ी पिलाएँ।", language: "भाषा",
+      lead: "अगर यह काम आया हो", title: "डेवलपर को एक कॉफ़ी पिलाएँ",
+      about: "मैं Yudaotor हूँ। खाली समय में ओपन-सोर्स सॉफ़्टवेयर बनाता हूँ, और Lyrimuse मेरा ही बनाया है।",
+      payHeading: "सहयोग के तरीके", sponsor: "GitHub पर सहयोग करें", sponsorHint: "अपने GitHub खाते से हर महीने या एक बार सहयोग करें।",
+      scanGroup: "QR कोड स्कैन करें",
+      alipay: "Alipay", alipayAlt: "Alipay QR कोड", alipayHint: "Alipay से स्कैन करें",
+      wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR कोड", wechatHint: "WeChat से स्कैन करें",
+      usesHeading: "पैसा कहाँ लगता है",
+      use1Title: "Last.fm Pro सदस्यता", use1Body: "1 दिसंबर से Last.fm का API सिर्फ़ Pro वालों के लिए है। सदस्यता लेने पर Lyrimuse में Scrobble और आँकड़े चलते रहेंगे।",
+      use2Title: "अपडेट और रखरखाव", use2Body: "नए प्लेयर का सपोर्ट, बग ठीक करना, नए macOS के साथ चलना।",
+      use3Title: "कॉफ़ी", use3Body: "कॉफ़ी तो चाहिए ही। उसी से काम चलता है।",
+      projectsHeading: "मैं किस पर काम कर रहा हूँ", lyrimuseDesc: "Mac के लिए मुफ़्त और ओपन-सोर्स डेस्कटॉप लिरिक्स: Apple Music, Spotify, YouTube Music और कई दूसरे प्लेयर के लिए शब्द-दर-शब्द चलते बोल।",
+      website: "वेबसाइट", source: "सोर्स कोड", moreProjects: "GitHub पर दूसरे प्रोजेक्ट", thanks: "जितना भी दें, दिल से शुक्रिया"
+    }
+  };
+  // ?lang= 先认(ja、pt-BR、zh-Hans 这类写法,大小写不限),认不出就按浏览器语言列表挨个找。
+  function match(raw) {
+    var l = String(raw || "").toLowerCase().replace(/_/g, "-");
+    if (l.indexOf("zh") === 0) {
+      if (/hans/.test(l)) return "zh-Hans";
+      return /hant|-tw|-hk|-mo/.test(l) ? "zh-Hant" : "zh-Hans";
+    }
+    if (l.indexOf("pt") === 0) return "pt-BR";
+    var two = l.slice(0, 2);
+    if (l.length > 2 && l.charAt(2) !== "-") return null;
+    return Object.prototype.hasOwnProperty.call(T, two) ? two : null;
+  }
+  function pick() {
+    var forced = new URLSearchParams(location.search).get("lang");
+    var list = navigator.languages && navigator.languages.length ? navigator.languages.slice() : [navigator.language || ""];
+    if (forced) list.unshift(forced);
+    for (var i = 0; i < list.length; i++) {
+      var hit = match(list[i]);
+      if (hit) return hit;
+    }
+    return "en";
+  }
+  var lang = pick(), t = T[lang];
+  document.documentElement.lang = lang;
+  document.title = t.pageTitle;
+  var meta = document.querySelector('meta[name="description"]');
+  if (meta) meta.setAttribute("content", t.description);
+  document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t[el.getAttribute("data-i18n")]; });
+  document.querySelectorAll("[data-i18n-alt]").forEach(function (el) { el.alt = t[el.getAttribute("data-i18n-alt")]; });
+  document.querySelectorAll("[data-i18n-aria]").forEach(function (el) { el.setAttribute("aria-label", t[el.getAttribute("data-i18n-aria")]); });
+
+  var site = document.getElementById("site-link");
+  if (site) site.href = "https://yudaotor.github.io/lyrimuse/" + (lang === "en" ? "" : lang === "zh-Hans" ? "zh/" : lang + "/");
+
+  var sel = document.getElementById("lang");
+  if (sel) {
+    sel.value = lang;
+    sel.addEventListener("change", function () {
+      var q = new URLSearchParams(location.search);
+      q.set("lang", sel.value);
+      location.search = q.toString();
+    });
+  }
+
+  // 一行字按片段拆开，每段带上起点 --k、长度 --w、单位时长 --u 和整行起始延迟 --d，CSS 依次把灰字填满。中日文按字拆，其它语言按词拆。
+  var canClip = window.CSS && (CSS.supports("background-clip", "text") || CSS.supports("-webkit-background-clip", "text"));
+  function prepFill(el, startMs, budgetMs, label) {
+    if (!el || !canClip) return;
+    var text = el.textContent, parts = [];
+    var byChar = /^(zh|ja)/.test(lang);
+    if (window.Intl && Intl.Segmenter) {
+      var seg = new Intl.Segmenter(lang, { granularity: byChar ? "grapheme" : "word" });
+      for (var it = seg.segment(text)[Symbol.iterator](), s = it.next(); !s.done; s = it.next()) parts.push(s.value.segment);
+    } else {
+      parts = byChar ? Array.from(text) : text.split(/(\s+)/);
+    }
+    var total = 0;
+    parts.forEach(function (p) { total += Math.max(1, Array.from(p.trim()).length); });
+    var unit = Math.max(40, Math.min(120, budgetMs / total));
+    var inner = document.createElement("span");
+    inner.setAttribute("aria-hidden", "true");
+    var k = 0;
+    parts.forEach(function (p) {
+      var w = Math.max(1, Array.from(p.trim()).length);
+      var span = document.createElement("span");
+      span.className = "c";
+      span.textContent = p;
+      span.style.setProperty("--k", k);
+      span.style.setProperty("--w", w);
+      inner.appendChild(span);
+      k += w;
+    });
+    el.style.setProperty("--u", unit.toFixed(1) + "ms");
+    el.style.setProperty("--d", startMs + "ms");
+    el.classList.add("fill");
+    if (label) el.setAttribute("aria-label", text);
+    el.textContent = "";
+    el.appendChild(inner);
+  }
+  prepFill(document.getElementById("title"), 400, 1500, true);
+  window.__notchFill = function () { prepFill(document.getElementById("notch-line"), 200, 1400, false); };
+})();
+
+// 收款码同一时间只开一张；带着 #alipay / #wechat 进来时展开对应那张。
+(function () {
+  var qrs = Array.prototype.slice.call(document.querySelectorAll("details.qr"));
+  qrs.forEach(function (d) {
+    d.addEventListener("toggle", function () { if (d.open) qrs.forEach(function (o) { if (o !== d) o.open = false; }); });
+  });
+  function openFromHash() {
+    var d = document.getElementById(location.hash.slice(1));
+    if (d && d.tagName === "DETAILS") {
+      d.open = true;
+      d.scrollIntoView({ block: "center" });
+    }
+  }
+  openFromHash();
+  window.addEventListener("hashchange", openFromHash);
+})();
+
+// 动效：卡片跟指针倾斜（触屏和减少动态效果时不跟），用途卡片边缘的光跟指针走，内容滚进视口时浮上来。
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var pass = document.getElementById("pass");
+  if (reduce && pass) pass.classList.remove("idle");
+
+  if (pass && fine && !reduce) {
+    var stage = document.querySelector(".stage");
+    var raf = 0, px = 0.5, py = 0.5;
+    function apply() {
+      raf = 0;
+      pass.style.setProperty("--ry", ((px - 0.5) * 22).toFixed(2) + "deg");
+      pass.style.setProperty("--rx", ((0.5 - py) * 16).toFixed(2) + "deg");
+      pass.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+      pass.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
+    }
+    stage.addEventListener("pointermove", function (e) {
+      var r = pass.getBoundingClientRect();
+      px = Math.min(1.2, Math.max(-0.2, (e.clientX - r.left) / r.width));
+      py = Math.min(1.2, Math.max(-0.2, (e.clientY - r.top) / r.height));
+      pass.classList.remove("idle");
+      pass.classList.add("live");
+      if (!raf) raf = requestAnimationFrame(apply);
+    });
+    stage.addEventListener("pointerleave", function () {
+      pass.classList.remove("live");
+      px = 0.5; py = 0.5;
+      pass.style.setProperty("--rx", "0deg");
+      pass.style.setProperty("--ry", "0deg");
+      setTimeout(function () { if (!pass.classList.contains("live")) pass.classList.add("idle"); }, 600);
+    });
+  }
+
+  document.querySelectorAll(".tile").forEach(function (el) {
+    el.addEventListener("pointermove", function (e) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      el.style.setProperty("--my", (e.clientY - r.top) + "px");
+    });
+  });
+
+  var notch = document.querySelector(".notch-demo");
+  if (reduce || !("IntersectionObserver" in window)) {
+    if (window.__notchFill) window.__notchFill();
+    return;
+  }
+  document.documentElement.classList.add("rv-on");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      en.target.classList.add("in");
+      if (en.target.contains(notch) && window.__notchFill) { window.__notchFill(); window.__notchFill = null; }
+      io.unobserve(en.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+  document.querySelectorAll(".rv").forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>
