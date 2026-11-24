@@ -5,378 +5,657 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>请作者喝杯咖啡 ☕</title>
 <meta name="description" content="如果这个小项目对你有帮助，欢迎请作者喝杯咖啡。">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/jpeg" href="assets/avatar.jpg">
+<link rel="apple-touch-icon" href="assets/avatar.jpg">
 <style>
   :root {
-    --bg: #faf6f0;
-    --card-bg: #ffffff;
-    --ink: #2b2320;
-    --ink-soft: #6b5f56;
-    --accent: #c47a3a;
-    --accent-soft: #f1ddc8;
-    --border: rgba(43, 35, 32, 0.08);
-    --shadow: rgba(43, 35, 32, 0.10);
+    --bg: #fbfbfd;
+    --surface: #ffffff;
+    --ink: #1d1d1f;
+    --ink-2: #6e6e73;
+    --unlit: #d2d2d7;
+    --line: rgba(0, 0, 0, 0.08);
+    --rose: #c9365c;
+    --rose-hover: #b52e51;
+    --rose-text: #c9365c;
+    --rose-soft: #fff1f4;
+    --panel-shadow: 0 1px 2px rgba(60, 20, 40, 0.05), 0 28px 56px -28px rgba(60, 20, 40, 0.22);
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, "Noto Sans", sans-serif;
+    color-scheme: light dark;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1714;
-      --card-bg: #262019;
-      --ink: #f3ece3;
-      --ink-soft: #b8aa9c;
-      --accent: #e2a465;
-      --accent-soft: #3a2d20;
-      --border: rgba(255, 255, 255, 0.08);
-      --shadow: rgba(0, 0, 0, 0.35);
+    :root:not([data-theme="light"]) {
+      --bg: #000000;
+      --surface: #1c1c1e;
+      --ink: #f5f5f7;
+      --ink-2: #a1a1a6;
+      --unlit: #3a3a3c;
+      --line: rgba(255, 255, 255, 0.10);
+      --rose: #d93d65;
+      --rose-hover: #e4537a;
+      --rose-text: #ff7a9c;
+      --rose-soft: #2c1219;
+      --panel-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 28px 56px -28px rgba(0, 0, 0, 0.8);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #1c1714;
-    --card-bg: #262019;
-    --ink: #f3ece3;
-    --ink-soft: #b8aa9c;
-    --accent: #e2a465;
-    --accent-soft: #3a2d20;
-    --border: rgba(255, 255, 255, 0.08);
-    --shadow: rgba(0, 0, 0, 0.35);
+    --bg: #000000;
+    --surface: #1c1c1e;
+    --ink: #f5f5f7;
+    --ink-2: #a1a1a6;
+    --unlit: #3a3a3c;
+    --line: rgba(255, 255, 255, 0.10);
+    --rose: #d93d65;
+    --rose-hover: #e4537a;
+    --rose-text: #ff7a9c;
+    --rose-soft: #2c1219;
+    --panel-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 28px 56px -28px rgba(0, 0, 0, 0.8);
   }
-  :root[data-theme="light"] {
-    --bg: #faf6f0;
-    --card-bg: #ffffff;
-    --ink: #2b2320;
-    --ink-soft: #6b5f56;
-    --accent: #c47a3a;
-    --accent-soft: #f1ddc8;
-    --border: rgba(43, 35, 32, 0.08);
-    --shadow: rgba(43, 35, 32, 0.10);
-  }
+  :root:lang(zh-Hant) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC", "Microsoft JhengHei", "Segoe UI", Roboto, "Noto Sans", sans-serif; }
+  :root:lang(ja) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", Roboto, "Noto Sans", sans-serif; }
+  :root:lang(ko) { --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", Roboto, "Noto Sans", sans-serif; }
 
   * { box-sizing: border-box; }
-  html, body {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
     margin: 0;
-    padding: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  }
-  body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 20px;
-  }
-  main {
-    width: 100%;
-    max-width: 640px;
-  }
-  .hero {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-  .hero .cup {
-    font-size: 44px;
-    line-height: 1;
-    margin-bottom: 14px;
-  }
-  h1 {
-    font-size: clamp(24px, 4vw, 30px);
-    font-weight: 650;
-    margin: 0 0 10px;
-    text-wrap: balance;
-  }
-  .hero p {
-    color: var(--ink-soft);
+    font-family: var(--font);
     font-size: 16px;
     line-height: 1.6;
-    margin: 0 auto;
-    max-width: 480px;
-    text-wrap: balance;
-    word-break: keep-all;
-    overflow-wrap: anywhere;
+    -webkit-font-smoothing: antialiased;
   }
-  .cards {
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--rose-text); outline-offset: 3px; border-radius: 6px; }
+  :lang(ko) :is(h1, h2, h3, p) { word-break: keep-all; }
+  :lang(ja) :is(h1, h2, h3, p) { word-break: auto-phrase; }
+
+  .wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+  /* 页头：作者和语言 */
+  .top { padding: 24px 0; }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .who { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 600; font-size: 15px; }
+  .who img { width: 36px; height: 36px; border-radius: 50%; display: block; box-shadow: 0 0 0 1px var(--line); }
+  .who:hover span { text-decoration: underline; text-underline-offset: 3px; }
+  .lang { position: relative; display: inline-flex; align-items: center; }
+  .lang svg { position: absolute; left: 11px; color: var(--ink-2); pointer-events: none; }
+  .lang .chev { left: auto; right: 11px; }
+  .lang select {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 32px 6px 34px;
+    cursor: pointer;
+  }
+  .lang select:hover { background: var(--surface); }
+
+  /* 主体：左边说明，右边赞助方式；窄屏时赞助方式插在标题下面 */
+  main .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(320px, 400px);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "hero pay" "body pay";
+    column-gap: clamp(48px, 7vw, 112px);
+    align-items: start;
+    padding-top: clamp(32px, 7vh, 88px);
+    padding-bottom: 96px;
+  }
+  .hero { grid-area: hero; }
+  .body { grid-area: body; }
+  .pay { grid-area: pay; position: sticky; top: 24px; }
+
+  /* 标题上下两行像歌词里的上一句和下一句 */
+  .lead, .next {
+    margin: 0 0 14px;
+    font-size: clamp(18px, 1.9vw, 23px);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink-2);
+    text-wrap: balance;
+  }
+  .next { margin: 16px 0 0; }
+  h1 {
+    margin: 0;
+    font-size: clamp(40px, 5.6vw, 80px);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  :lang(zh-Hans) h1, :lang(zh-Hant) h1, :lang(ja) h1 { letter-spacing: 0; line-height: 1.12; }
+  :lang(th) h1, :lang(hi) h1 { letter-spacing: 0; line-height: 1.3; }
+  :lang(ja) h1 { font-size: clamp(36px, 4.6vw, 66px); }
+
+  /* 标题像正在唱的那一行歌词：灰字按顺序一段段填满 */
+  @property --fp { syntax: "<percentage>"; inherits: false; initial-value: -12%; }
+  @keyframes fp { from { --fp: -12%; } to { --fp: 112%; } }
+  h1 .c {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(90deg, var(--ink) calc(var(--fp, -12%) - 12%), var(--unlit) calc(var(--fp, -12%) + 12%));
+    animation: fp calc(var(--w) * var(--u)) linear both;
+    animation-delay: calc(var(--k) * var(--u) + 350ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    h1 .c { animation: none; --fp: 112%; }
+  }
+
+  .about {
+    margin: 28px 0 0;
+    max-width: 34em;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .about b { color: var(--ink); font-weight: 600; }
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .uses { margin-top: 72px; }
+  .uses dl {
+    margin: 12px 0 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 0 40px;
   }
-  @media (max-width: 520px) {
-    .cards { grid-template-columns: 1fr; }
+  .uses dl > div { border-top: 1px solid var(--line); padding-top: 18px; }
+  .uses dt { font-size: 18px; font-weight: 600; line-height: 1.4; }
+  .uses dd { margin: 8px 0 0; font-size: 15px; line-height: 1.65; color: var(--ink-2); }
+
+  .work { margin-top: 64px; }
+  .project {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 4px 20px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
   }
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 22px 22px 26px;
-    box-shadow: 0 10px 30px var(--shadow);
-    text-align: center;
+  .project img { width: 64px; height: 64px; display: block; grid-row: span 3; }
+  .project h3 { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.4; }
+  .project p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--ink-2); max-width: 36em; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 6px; font-size: 15px; }
+  .links a { color: var(--rose-text); text-decoration: none; font-weight: 500; }
+  .links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .more { display: inline-block; margin-top: 20px; font-size: 15px; color: var(--ink-2); text-underline-offset: 3px; }
+  .more:hover { color: var(--ink); }
+
+  /* 赞助方式面板 */
+  .panel {
+    background: var(--surface);
+    border-radius: 24px;
+    box-shadow: var(--panel-shadow);
+    padding: 26px 26px 18px;
   }
-  .card .label {
-    display: inline-flex;
+  .panel h2 { margin-bottom: 18px; }
+  .group-label {
+    display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
+    gap: 8px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--accent);
-    background: var(--accent-soft);
-    padding: 5px 12px;
-    border-radius: 999px;
-    margin-bottom: 16px;
-  }
-  .card img {
-    width: 100%;
-    max-width: 220px;
-    border-radius: 12px;
-    display: block;
-    margin: 0 auto;
-  }
-  .card .hint {
-    margin-top: 14px;
-    font-size: 13px;
-    color: var(--ink-soft);
-  }
-  .card.wide {
-    grid-column: 1 / -1;
+    margin-bottom: 12px;
   }
   .sponsor-btn {
     display: flex;
-    width: fit-content;
-    min-width: 240px;
-    margin: 0 auto;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-size: 16px;
-    font-weight: 650;
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 20px;
+    border-radius: 14px;
+    background: var(--rose);
     color: #fff;
+    font-size: 16px;
+    font-weight: 600;
     text-decoration: none;
-    background: #bf3989;
-    border-radius: 16px;
-    padding: 14px 28px;
-    box-shadow: 0 10px 24px rgba(191, 57, 137, 0.30);
-    transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+    text-align: center;
+    line-height: 1.3;
+    transition: background-color 0.15s ease;
   }
-  .sponsor-btn:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-    box-shadow: 0 14px 28px rgba(191, 57, 137, 0.38);
-  }
-  .sponsor-btn:active { transform: translateY(0); }
-  .sponsor-btn:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
-  .sponsor-btn .heart { color: #fff; }
-  .sponsor-btn .go { opacity: 0.85; }
-  .pay-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: start;
-    margin-top: 20px;
-  }
-  @media (max-width: 520px) {
-    .pay-grid { grid-template-columns: 1fr; }
-  }
-  .pay.alipay { --brand: #1677ff; --brand-shadow: rgba(22, 119, 255, 0.28); }
-  .pay.wechat { --brand: #07c160; --brand-shadow: rgba(7, 193, 96, 0.28); }
-  .pay > summary {
+  .sponsor-btn:hover { background: var(--rose-hover); }
+  .hint { margin: 10px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+  .scan { margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .qr { border-top: 1px solid var(--line); }
+  .qr > summary {
     list-style: none;
     cursor: pointer;
     user-select: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 16px 20px;
-    border-radius: 16px;
-    background: var(--brand);
-    color: #fff;
+    gap: 12px;
+    min-height: 56px;
     font-size: 16px;
-    font-weight: 650;
-    box-shadow: 0 10px 24px var(--brand-shadow);
+    font-weight: 500;
   }
-  .pay > summary::-webkit-details-marker { display: none; }
-  .pay > summary:hover { filter: brightness(1.06); }
-  .pay > summary:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: 3px; }
-  .pay .chev { transition: transform 0.2s ease; }
-  .pay[open] .chev { transform: rotate(180deg); }
-  .pay .card { margin-top: 12px; }
-  footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 13px;
-    color: var(--ink-soft);
+  .qr > summary::-webkit-details-marker { display: none; }
+  .qr > summary .name { flex: 1; }
+  .qr .mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    flex: none;
   }
-  footer a {
-    color: var(--ink-soft);
-    text-decoration: underline;
-    text-underline-offset: 2px;
+  .qr.alipay .mark { background: #1677ff; }
+  .qr.wechat .mark { background: #07c160; }
+  .qr .chev { color: var(--ink-2); transition: transform 0.2s ease; flex: none; }
+  .qr[open] .chev { transform: rotate(180deg); }
+  .qr > summary:hover .name { text-decoration: underline; text-underline-offset: 3px; }
+  .qr .code { padding: 4px 0 20px; text-align: center; }
+  .qr .code img {
+    display: block;
+    width: 100%;
+    max-width: 232px;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px var(--line);
   }
-  footer a:hover { color: var(--accent); }
+  .qr .code .hint { margin-top: 12px; }
+  .qr[open] .code { animation: reveal 0.22s ease-out; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .qr[open] .code { animation: none; }
+    .qr .chev { transition: none; }
+  }
+
+  footer { border-top: 1px solid var(--line); }
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-top: 28px;
+    padding-bottom: 40px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  footer p { margin: 0; }
+  footer nav { display: flex; gap: 20px; }
+  footer nav a { text-decoration: none; }
+  footer nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    main .wrap {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto;
+      grid-template-areas: "hero" "pay" "body";
+      padding-top: 24px;
+      padding-bottom: 64px;
+    }
+    .pay { position: static; margin-top: 36px; }
+    .uses { margin-top: 56px; }
+    .work { margin-top: 48px; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .top { padding: 16px 0; }
+    .lang select { max-width: 168px; text-overflow: ellipsis; }
+    .about { font-size: 17px; margin-top: 22px; }
+    .uses dl { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+    .panel { padding: 22px 20px 12px; border-radius: 20px; }
+    .project { grid-template-columns: 52px minmax(0, 1fr); gap: 4px 16px; }
+    .project img { width: 52px; height: 52px; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <div class="hero">
-    <div class="cup">☕</div>
-    <h1 data-i18n="title">请作者喝杯咖啡</h1>
-    <p data-i18n="intro">如果这个开源小项目帮到了你，欢迎请作者喝一杯</p>
+<header class="top">
+  <div class="wrap">
+    <a class="who" href="https://github.com/Yudaotor"><img src="assets/avatar.jpg" alt="" width="36" height="36"><span>Yudaotor</span></a>
+    <label class="lang">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm-6.5 6.5h13M8 1.5c1.8 1.8 2.7 4 2.7 6.5S9.8 12.7 8 14.5M8 1.5C6.2 3.3 5.3 5.5 5.3 8s.9 4.7 2.7 6.5"/></svg>
+      <select id="lang" aria-label="语言" data-i18n-aria="language">
+        <option value="zh-Hans">简体中文</option>
+        <option value="zh-Hant">繁體中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="pt-BR">Português (Brasil)</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="ru">Русский</option>
+        <option value="uk">Українська</option>
+        <option value="th">ไทย</option>
+        <option value="tr">Türkçe</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+      <svg class="chev" width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </label>
   </div>
-  <div class="cards">
-    <div class="card wide">
-      <span class="label">GitHub Sponsors</span>
-      <a class="sponsor-btn" href="https://github.com/sponsors/Yudaotor"><span class="heart" aria-hidden="true">♥</span><span data-i18n="sponsor">在 GitHub 上赞助</span><svg class="go" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 10 10 4M5.5 4H10v4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <div class="hint" data-i18n="sponsorHint">用 GitHub 账号赞助，按月或一次性都可以</div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <p class="lead" data-i18n="lead">如果这个开源小项目帮到了你</p>
+      <h1 id="title" data-i18n="title">请作者喝杯咖啡</h1>
+      <p class="next" data-i18n="thanks">谢谢你的支持</p>
+      <p class="about" data-i18n="about">我是 Yudaotor，写一些免费开源的软件，现在主要在做 Lyrimuse</p>
+    </section>
+
+    <aside class="pay" aria-labelledby="pay-heading">
+      <div class="panel">
+        <h2 id="pay-heading" data-i18n="payHeading">赞助方式</h2>
+        <div class="group-label">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          <span>GitHub Sponsors</span>
+        </div>
+        <a class="sponsor-btn" href="https://github.com/sponsors/Yudaotor"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M7.655 14.916v-.001h-.002l-.006-.003-.018-.01a22.066 22.066 0 0 1-3.744-2.584C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.094 22.094 0 0 1-3.744 2.584l-.018.01-.006.003h-.002a.75.75 0 0 1-.69 0Z"/></svg><span data-i18n="sponsor">在 GitHub 上赞助</span></a>
+        <p class="hint" data-i18n="sponsorHint">用 GitHub 账号赞助，按月或一次性都可以</p>
+
+        <div class="scan">
+          <div class="group-label" data-i18n="scanGroup">扫码支付</div>
+          <details class="qr alipay" id="alipay">
+            <summary><span class="mark"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg></span><span class="name" data-i18n="alipay">支付宝</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="code">
+              <img src="assets/alipay.jpg" alt="支付宝收款码" data-i18n-alt="alipayAlt" loading="lazy" width="1280" height="1919">
+              <p class="hint" data-i18n="alipayHint">打开支付宝扫一扫</p>
+            </div>
+          </details>
+          <details class="qr wechat" id="wechat">
+            <summary><span class="mark"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg></span><span class="name" data-i18n="wechat">微信支付</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+            <div class="code">
+              <img src="assets/wechat.jpg" alt="微信收款码" data-i18n-alt="wechatAlt" loading="lazy" width="828" height="1124">
+              <p class="hint" data-i18n="wechatHint">打开微信扫一扫</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </aside>
+
+    <div class="body">
+      <section class="uses" aria-labelledby="uses-heading">
+        <h2 id="uses-heading" data-i18n="usesHeading">赞助会用在哪里</h2>
+        <dl>
+          <div>
+            <dt data-i18n="use1Title">Last.fm Pro 订阅</dt>
+            <dd data-i18n="use1Body">2026 年 12 月 1 日起，Last.fm 只接受 Pro 会员的 API Key。Lyrimuse 内置的是作者的开发者账号，订阅续上了，大家的 Scrobble 和统计才能照常用</dd>
+          </div>
+          <div>
+            <dt data-i18n="use2Title">写代码的时间</dt>
+            <dd data-i18n="use2Body">修问题、接入新的播放器、跟上新的系统版本，都要花时间</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="work" aria-labelledby="work-heading">
+        <h2 id="work-heading" data-i18n="projectsHeading">我在做的</h2>
+        <div class="project">
+          <img src="assets/lyrimuse.png" alt="" width="64" height="64">
+          <h3>Lyrimuse</h3>
+          <p data-i18n="lyrimuseDesc">免费开源的 Mac 桌面歌词软件，支持 Apple Music、Spotify、QQ 音乐、网易云音乐等播放器的逐字歌词</p>
+          <div class="links">
+            <a id="site-link" href="https://yudaotor.github.io/lyrimuse/zh/" data-i18n="website">官网</a>
+            <a href="https://github.com/Yudaotor/lyrimuse" data-i18n="source">源代码</a>
+          </div>
+        </div>
+        <a class="more" href="https://github.com/Yudaotor?tab=repositories" data-i18n="moreProjects">GitHub 上的其他项目</a>
+      </section>
     </div>
   </div>
-  <div class="pay-grid">
-    <details class="pay alipay" id="alipay">
-      <summary><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg><span data-i18n="alipayToggle">支付宝扫码</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-      <div class="card">
-        <img src="assets/alipay.jpg" alt="支付宝收款码" data-i18n-alt="alipayAlt" loading="lazy">
-        <div class="hint" data-i18n="alipayHint">打开支付宝扫一扫</div>
-      </div>
-    </details>
-    <details class="pay wechat" id="wechat">
-      <summary><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M2 2h5v5H2zM3.5 3.5v2h2v-2zM11 2h5v5h-5zM12.5 3.5v2h2v-2zM2 11h5v5H2zM3.5 12.5v2h2v-2zM11 11h2v2h-2zM14 11h2v2h-2zM11 14h2v2h-2zM14 14h2v2h-2z"/></svg><span data-i18n="wechatToggle">微信扫码</span><svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-      <div class="card">
-        <img src="assets/wechat.jpg" alt="微信收款码" data-i18n-alt="wechatAlt" loading="lazy">
-        <div class="hint" data-i18n="wechatHint">打开微信扫一扫</div>
-      </div>
-    </details>
-  </div>
-  <footer>
-    <a href="https://github.com/Yudaotor">github.com/Yudaotor</a>
-  </footer>
 </main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Yudaotor</p>
+    <nav>
+      <a href="https://github.com/Yudaotor">github.com/Yudaotor</a>
+    </nav>
+  </div>
+</footer>
+
 <script>
-// 两张收款码各收在一个品牌色按钮里(<details>),点开才显示。界面语言跟 Lyrimuse 的 16 种一致:中文按简繁分,pt 开头用 pt-BR,其它按前两位字母找,都没有就用英文。?lang=ja 之类可以强制。
+// 界面语言跟 Lyrimuse 的 16 种一致：?lang=ja 之类优先，否则按浏览器语言列表挨个找；中文按简繁分，pt 开头用 pt-BR，其它按前两位字母找，都没有就用英文。
 (function () {
   var T = {
     "zh-Hans": {
-      pageTitle: "请作者喝杯咖啡 ☕", description: "如果这个小项目对你有帮助，欢迎请作者喝杯咖啡。",
-      title: "请作者喝杯咖啡", intro: "如果这个开源小项目帮到了你，欢迎请作者喝一杯",
-      sponsor: "在 GitHub 上赞助", sponsorHint: "用 GitHub 账号赞助，按月或一次性都可以",
+      pageTitle: "请作者喝杯咖啡 ☕", description: "如果这个小项目对你有帮助，欢迎请作者喝杯咖啡。", language: "语言",
+      lead: "如果这个开源小项目帮到了你", title: "请作者喝杯咖啡",
+      about: "我是 Yudaotor，写一些免费开源的软件，现在主要在做 Lyrimuse",
+      payHeading: "赞助方式", sponsor: "在 GitHub 上赞助", sponsorHint: "用 GitHub 账号赞助，按月或一次性都可以",
+      scanGroup: "扫码支付",
       alipay: "支付宝", alipayAlt: "支付宝收款码", alipayHint: "打开支付宝扫一扫",
       wechat: "微信支付", wechatAlt: "微信收款码", wechatHint: "打开微信扫一扫",
-      alipayToggle: "支付宝扫码", wechatToggle: "微信扫码"
+      usesHeading: "赞助会用在哪里",
+      use1Title: "Last.fm Pro 订阅", use1Body: "2026 年 12 月 1 日起，Last.fm 只接受 Pro 会员的 API Key。Lyrimuse 内置的是作者的开发者账号，订阅续上了，大家的 Scrobble 和统计才能照常用",
+      use2Title: "写代码的时间", use2Body: "修问题、接入新的播放器、跟上新的系统版本，都要花时间",
+      projectsHeading: "我在做的", lyrimuseDesc: "免费开源的 Mac 桌面歌词软件，支持 Apple Music、Spotify、QQ 音乐、网易云音乐等播放器的逐字歌词",
+      website: "官网", source: "源代码", moreProjects: "GitHub 上的其他项目", thanks: "谢谢你的支持"
     },
     "zh-Hant": {
-      pageTitle: "請作者喝杯咖啡 ☕", description: "如果這個小專案對你有幫助，歡迎請作者喝杯咖啡。",
-      title: "請作者喝杯咖啡", intro: "如果這個開源小專案幫到了你，歡迎請作者喝一杯",
-      sponsor: "在 GitHub 上贊助", sponsorHint: "用 GitHub 帳號贊助，按月或一次性都可以",
+      pageTitle: "請作者喝杯咖啡 ☕", description: "如果這個小專案對你有幫助，歡迎請作者喝杯咖啡。", language: "語言",
+      lead: "如果這個開源小專案幫到了你", title: "請作者喝杯咖啡",
+      about: "我是 Yudaotor，寫一些免費開源的軟體，現在主要在做 Lyrimuse",
+      payHeading: "贊助方式", sponsor: "在 GitHub 上贊助", sponsorHint: "用 GitHub 帳號贊助，按月或一次性都可以",
+      scanGroup: "掃碼支付",
       alipay: "支付寶", alipayAlt: "支付寶收款碼", alipayHint: "打開支付寶掃一掃",
       wechat: "微信支付", wechatAlt: "微信收款碼", wechatHint: "打開微信掃一掃",
-      alipayToggle: "支付寶掃碼", wechatToggle: "微信掃碼"
+      usesHeading: "贊助會用在哪裡",
+      use1Title: "Last.fm Pro 訂閱", use1Body: "2026 年 12 月 1 日起，Last.fm 只接受 Pro 會員的 API Key。Lyrimuse 內建的是作者的開發者帳號，訂閱續上了，大家的 Scrobble 和統計才能照常使用",
+      use2Title: "寫程式的時間", use2Body: "修問題、接入新的播放器、跟上新的系統版本，都要花時間",
+      projectsHeading: "我在做的", lyrimuseDesc: "免費開源的 Mac 桌面歌詞軟體，支援 Apple Music、Spotify、QQ 音樂、網易雲音樂等播放器的逐字歌詞",
+      website: "官網", source: "原始碼", moreProjects: "GitHub 上的其他專案", thanks: "謝謝你的支持"
     },
     "en": {
-      pageTitle: "Buy the author a coffee ☕", description: "If this little project helped you, you're welcome to buy the author a coffee.",
-      title: "Buy the author a coffee", intro: "If this little open-source project helped you, you're welcome to buy the author a coffee.",
-      sponsor: "Sponsor on GitHub", sponsorHint: "Sponsor with your GitHub account, monthly or one-time.",
+      pageTitle: "Buy the author a coffee ☕", description: "If this little project helped you, you're welcome to buy the author a coffee.", language: "Language",
+      lead: "If this little open-source project helped you", title: "Buy the author a coffee",
+      about: "I'm Yudaotor. I make free, open-source software, and these days mostly Lyrimuse.",
+      payHeading: "Ways to give", sponsor: "Sponsor on GitHub", sponsorHint: "Sponsor with your GitHub account, monthly or one\u2011time.",
+      scanGroup: "Scan a QR code",
       alipay: "Alipay", alipayAlt: "Alipay QR code", alipayHint: "Scan with Alipay",
       wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR code", wechatHint: "Scan with WeChat",
-      alipayToggle: "Alipay QR code", wechatToggle: "WeChat Pay QR code"
+      usesHeading: "Where your support goes",
+      use1Title: "Last.fm Pro subscription", use1Body: "From December 1, 2026, Last.fm only accepts API keys from Pro members. Lyrimuse ships with the author's developer account, so keeping that subscription going is what keeps everyone's scrobbles and stats working.",
+      use2Title: "Time to write code", use2Body: "Fixing bugs, adding new players and keeping up with new macOS versions all take time.",
+      projectsHeading: "What I'm working on", lyrimuseDesc: "Free, open-source desktop lyrics for the Mac, synced word by word for Apple Music, Spotify, YouTube Music and many other players.",
+      website: "Website", source: "Source code", moreProjects: "More projects on GitHub", thanks: "Thank you for your support"
     },
     "ja": {
-      pageTitle: "作者にコーヒーをおごる ☕", description: "この小さなプロジェクトが役に立ったら、作者にコーヒーを一杯おごってください。",
-      title: "作者にコーヒーをおごる", intro: "この小さなオープンソースプロジェクトが役に立ったら、作者にコーヒーを一杯おごってください。",
-      sponsor: "GitHubで支援する", sponsorHint: "GitHubアカウントで、毎月または1回だけ支援できます。",
+      pageTitle: "作者にコーヒーをおごる ☕", description: "この小さなプロジェクトが役に立ったら、作者にコーヒーを一杯おごってください。", language: "言語",
+      lead: "この小さなオープンソースプロジェクトが役に立ったら", title: "作者にコーヒーをおごる",
+      about: "Yudaotorです。無料のオープンソースソフトを作っていて、いまは主にLyrimuseを開発しています。",
+      payHeading: "支援の方法", sponsor: "GitHubで支援する", sponsorHint: "GitHubアカウントで、毎月または1回だけ支援できます。",
+      scanGroup: "QRコードで支払う",
       alipay: "Alipay", alipayAlt: "AlipayのQRコード", alipayHint: "Alipayでスキャン",
       wechat: "WeChat Pay", wechatAlt: "WeChat PayのQRコード", wechatHint: "WeChatでスキャン",
-      alipayToggle: "AlipayのQRコード", wechatToggle: "WeChat PayのQRコード"
+      usesHeading: "支援の使い道",
+      use1Title: "Last.fm Proの購読", use1Body: "2026年12月1日から、Last.fmはProメンバーのAPIキーしか受け付けなくなります。Lyrimuseには作者の開発者アカウントが組み込まれているため、購読を続けることで、みなさんのScrobbleと統計がそのまま使えます。",
+      use2Title: "開発の時間", use2Body: "不具合の修正、新しいプレーヤーへの対応、新しいmacOSへの追従には、どれも時間がかかります。",
+      projectsHeading: "取り組んでいるもの", lyrimuseDesc: "Mac向けの無料・オープンソースのデスクトップ歌詞アプリ。Apple Music、Spotify、YouTube Musicなど多くのプレーヤーで、歌詞を1語ずつ表示します。",
+      website: "公式サイト", source: "ソースコード", moreProjects: "GitHubのほかのプロジェクト", thanks: "ご支援ありがとうございます"
     },
     "ko": {
-      pageTitle: "개발자에게 커피 한 잔 사기 ☕", description: "이 작은 프로젝트가 도움이 되었다면 개발자에게 커피 한 잔을 사 주십시오.",
-      title: "개발자에게 커피 한 잔 사기", intro: "이 작은 오픈 소스 프로젝트가 도움이 되었다면 개발자에게 커피 한 잔을 사 주십시오.",
-      sponsor: "GitHub에서 후원하기", sponsorHint: "GitHub 계정으로 매월 또는 한 번만 후원할 수 있습니다.",
+      pageTitle: "개발자에게 커피 한 잔 사기 ☕", description: "이 작은 프로젝트가 도움이 되었다면 개발자에게 커피 한 잔을 사 주십시오.", language: "언어",
+      lead: "이 작은 오픈 소스 프로젝트가 도움이 되었다면", title: "개발자에게 커피 한 잔 사기",
+      about: "Yudaotor입니다. 무료 오픈 소스 소프트웨어를 만들고 있으며, 요즘은 주로 Lyrimuse를 개발하고 있습니다.",
+      payHeading: "후원 방법", sponsor: "GitHub에서 후원하기", sponsorHint: "GitHub 계정으로 매월 또는 한 번만 후원할 수 있습니다.",
+      scanGroup: "QR 코드로 결제",
       alipay: "알리페이", alipayAlt: "알리페이 QR 코드", alipayHint: "알리페이 앱으로 스캔하십시오",
       wechat: "위챗페이", wechatAlt: "위챗페이 QR 코드", wechatHint: "위챗 앱으로 스캔하십시오",
-      alipayToggle: "알리페이 QR 코드", wechatToggle: "위챗페이 QR 코드"
+      usesHeading: "후원금은 이렇게 쓰입니다",
+      use1Title: "Last.fm Pro 구독", use1Body: "2026년 12월 1일부터 Last.fm은 Pro 회원의 API 키만 받습니다. Lyrimuse에는 개발자의 계정이 내장되어 있어, 이 구독을 유지해야 모든 사용자의 스크로블과 통계가 계속 작동합니다.",
+      use2Title: "개발에 쓰는 시간", use2Body: "버그 수정, 새 플레이어 지원, 새 macOS 버전 대응에는 모두 시간이 듭니다.",
+      projectsHeading: "만들고 있는 것", lyrimuseDesc: "Mac용 무료 오픈 소스 데스크톱 가사 앱입니다. Apple Music, Spotify, YouTube Music 등 여러 플레이어의 가사를 단어 단위로 맞춰 보여 줍니다.",
+      website: "웹사이트", source: "소스 코드", moreProjects: "GitHub의 다른 프로젝트", thanks: "후원해 주셔서 감사합니다"
     },
     "es": {
-      pageTitle: "Invita al autor a un café ☕", description: "Si este pequeño proyecto te ha ayudado, puedes invitar al autor a un café.",
-      title: "Invita al autor a un café", intro: "Si este pequeño proyecto de código abierto te ha ayudado, puedes invitar al autor a un café.",
-      sponsor: "Patrocinar en GitHub", sponsorHint: "Patrocina con tu cuenta de GitHub, cada mes o una sola vez.",
+      pageTitle: "Invita al autor a un café ☕", description: "Si este pequeño proyecto te ha ayudado, puedes invitar al autor a un café.", language: "Idioma",
+      lead: "Si este pequeño proyecto de código abierto te ha ayudado", title: "Invita al autor a un café",
+      about: "Soy Yudaotor. Hago software gratuito y de código abierto; ahora mismo, sobre todo Lyrimuse.",
+      payHeading: "Formas de apoyar", sponsor: "Patrocinar en GitHub", sponsorHint: "Patrocina con tu cuenta de GitHub, cada mes o una sola vez.",
+      scanGroup: "Escanear un código QR",
       alipay: "Alipay", alipayAlt: "Código QR de Alipay", alipayHint: "Escanéalo con Alipay",
       wechat: "WeChat Pay", wechatAlt: "Código QR de WeChat Pay", wechatHint: "Escanéalo con WeChat",
-      alipayToggle: "Código QR de Alipay", wechatToggle: "Código QR de WeChat Pay"
+      usesHeading: "En qué se usa tu apoyo",
+      use1Title: "Suscripción a Last.fm Pro", use1Body: "Desde el 1 de diciembre de 2026, Last.fm solo acepta claves de API de miembros Pro. Lyrimuse usa la cuenta de desarrollador del autor, así que mantener esa suscripción es lo que permite que los scrobbles y las estadísticas de todos sigan funcionando.",
+      use2Title: "Tiempo para programar", use2Body: "Corregir errores, añadir reproductores nuevos y adaptarse a cada versión de macOS lleva tiempo.",
+      projectsHeading: "En qué estoy trabajando", lyrimuseDesc: "Letras en el escritorio del Mac, gratuitas y de código abierto, sincronizadas palabra por palabra con Apple Music, Spotify, YouTube Music y muchos otros reproductores.",
+      website: "Sitio web", source: "Código fuente", moreProjects: "Más proyectos en GitHub", thanks: "Gracias por tu apoyo"
     },
     "fr": {
-      pageTitle: "Offrir un café à l’auteur ☕", description: "Si ce petit projet vous a été utile, vous pouvez offrir un café à l’auteur.",
-      title: "Offrir un café à l’auteur", intro: "Si ce petit projet open source vous a été utile, vous pouvez offrir un café à l’auteur.",
-      sponsor: "Soutenir sur GitHub", sponsorHint: "Soutenez avec votre compte GitHub, chaque mois ou une seule fois.",
+      pageTitle: "Offrir un café à l’auteur ☕", description: "Si ce petit projet vous a été utile, vous pouvez offrir un café à l’auteur.", language: "Langue",
+      lead: "Si ce petit projet open source vous a été utile", title: "Offrir un café à l’auteur",
+      about: "Je suis Yudaotor. Je développe des logiciels gratuits et open source, en ce moment surtout Lyrimuse.",
+      payHeading: "Comment soutenir", sponsor: "Soutenir sur GitHub", sponsorHint: "Soutenez avec votre compte GitHub, chaque mois ou une seule fois.",
+      scanGroup: "Scanner un code QR",
       alipay: "Alipay", alipayAlt: "Code QR Alipay", alipayHint: "Scannez avec Alipay",
       wechat: "WeChat Pay", wechatAlt: "Code QR WeChat Pay", wechatHint: "Scannez avec WeChat",
-      alipayToggle: "Code QR Alipay", wechatToggle: "Code QR WeChat Pay"
+      usesHeading: "À quoi sert votre soutien",
+      use1Title: "Abonnement Last.fm Pro", use1Body: "À partir du 1er décembre 2026, Last.fm n’accepte plus que les clés d’API des membres Pro. Lyrimuse utilise le compte développeur de l’auteur : c’est cet abonnement qui permet aux scrobbles et aux statistiques de chacun de continuer à fonctionner.",
+      use2Title: "Du temps pour coder", use2Body: "Corriger des bugs, prendre en charge de nouveaux lecteurs et suivre les nouvelles versions de macOS, tout cela prend du temps.",
+      projectsHeading: "Ce sur quoi je travaille", lyrimuseDesc: "Des paroles sur le bureau du Mac, gratuites et open source, synchronisées mot à mot avec Apple Music, Spotify, YouTube Music et bien d’autres lecteurs.",
+      website: "Site web", source: "Code source", moreProjects: "Autres projets sur GitHub", thanks: "Merci pour votre soutien"
     },
     "de": {
-      pageTitle: "Spendier dem Autor einen Kaffee ☕", description: "Wenn dir dieses kleine Projekt geholfen hat, kannst du dem Autor gern einen Kaffee spendieren.",
-      title: "Spendier dem Autor einen Kaffee", intro: "Wenn dir dieses kleine Open-Source-Projekt geholfen hat, kannst du dem Autor gern einen Kaffee spendieren.",
-      sponsor: "Auf GitHub unterstützen", sponsorHint: "Unterstütze mit deinem GitHub-Account, monatlich oder einmalig.",
+      pageTitle: "Spendier dem Autor einen Kaffee ☕", description: "Wenn dir dieses kleine Projekt geholfen hat, kannst du dem Autor gern einen Kaffee spendieren.", language: "Sprache",
+      lead: "Wenn dir dieses kleine Open-Source-Projekt geholfen hat", title: "Spendier dem Autor einen Kaffee",
+      about: "Ich bin Yudaotor. Ich schreibe kostenlose Open-Source-Software, zurzeit vor allem Lyrimuse.",
+      payHeading: "So kannst du unterstützen", sponsor: "Auf GitHub unterstützen", sponsorHint: "Unterstütze mit deinem GitHub-Account, monatlich oder einmalig.",
+      scanGroup: "QR-Code scannen",
       alipay: "Alipay", alipayAlt: "Alipay-QR-Code", alipayHint: "Mit Alipay scannen",
       wechat: "WeChat Pay", wechatAlt: "WeChat-Pay-QR-Code", wechatHint: "Mit WeChat scannen",
-      alipayToggle: "Alipay-QR-Code", wechatToggle: "WeChat-Pay-QR-Code"
+      usesHeading: "Wofür deine Unterstützung verwendet wird",
+      use1Title: "Last.fm-Pro-Abo", use1Body: "Ab dem 1. Dezember 2026 akzeptiert Last.fm nur noch API Keys von Pro-Mitgliedern. Lyrimuse nutzt das Entwicklerkonto des Autors – nur solange dieses Abo weiterläuft, funktionieren Scrobbles und Statistiken für alle.",
+      use2Title: "Zeit zum Programmieren", use2Body: "Fehler beheben, neue Player einbinden und mit neuen macOS-Versionen Schritt halten – das alles braucht Zeit.",
+      projectsHeading: "Woran ich arbeite", lyrimuseDesc: "Kostenlose Open-Source-Desktop-Lyrics für den Mac, Wort für Wort synchron mit Apple Music, Spotify, YouTube Music und vielen weiteren Playern.",
+      website: "Website", source: "Quellcode", moreProjects: "Weitere Projekte auf GitHub", thanks: "Danke für deine Unterstützung"
     },
     "it": {
-      pageTitle: "Offri un caffè all’autore ☕", description: "Se questo piccolo progetto ti è stato utile, puoi offrire un caffè all’autore.",
-      title: "Offri un caffè all’autore", intro: "Se questo piccolo progetto open source ti è stato utile, puoi offrire un caffè all’autore.",
-      sponsor: "Sostieni su GitHub", sponsorHint: "Sostieni con il tuo account GitHub, ogni mese o una volta sola.",
+      pageTitle: "Offri un caffè all’autore ☕", description: "Se questo piccolo progetto ti è stato utile, puoi offrire un caffè all’autore.", language: "Lingua",
+      lead: "Se questo piccolo progetto open source ti è stato utile", title: "Offri un caffè all’autore",
+      about: "Sono Yudaotor. Scrivo software gratuito e open source, e in questo periodo soprattutto Lyrimuse.",
+      payHeading: "Come sostenere", sponsor: "Sostieni su GitHub", sponsorHint: "Sostieni con il tuo account GitHub, ogni mese o una volta sola.",
+      scanGroup: "Scansiona un codice QR",
       alipay: "Alipay", alipayAlt: "Codice QR Alipay", alipayHint: "Scansiona con Alipay",
       wechat: "WeChat Pay", wechatAlt: "Codice QR WeChat Pay", wechatHint: "Scansiona con WeChat",
-      alipayToggle: "Codice QR Alipay", wechatToggle: "Codice QR WeChat Pay"
+      usesHeading: "Come viene usato il tuo sostegno",
+      use1Title: "Abbonamento a Last.fm Pro", use1Body: "Dal 1º dicembre 2026 Last.fm accetta solo chiavi API dei membri Pro. Lyrimuse usa l’account sviluppatore dell’autore: è questo abbonamento a far funzionare gli scrobble e le statistiche di tutti.",
+      use2Title: "Tempo per programmare", use2Body: "Correggere bug, supportare nuovi player e stare al passo con le nuove versioni di macOS richiede tempo.",
+      projectsHeading: "A cosa sto lavorando", lyrimuseDesc: "Testi sul desktop del Mac, gratuiti e open source, sincronizzati parola per parola con Apple Music, Spotify, YouTube Music e molti altri player.",
+      website: "Sito web", source: "Codice sorgente", moreProjects: "Altri progetti su GitHub", thanks: "Grazie per il tuo sostegno"
     },
     "pt-BR": {
-      pageTitle: "Pague um café ao autor ☕", description: "Se este pequeno projeto foi útil para você, que tal pagar um café ao autor?",
-      title: "Pague um café ao autor", intro: "Se este pequeno projeto de código aberto foi útil para você, que tal pagar um café ao autor?",
-      sponsor: "Patrocinar no GitHub", sponsorHint: "Patrocine com sua conta do GitHub, todo mês ou uma única vez.",
+      pageTitle: "Pague um café ao autor ☕", description: "Se este pequeno projeto foi útil para você, que tal pagar um café ao autor?", language: "Idioma",
+      lead: "Se este pequeno projeto de código aberto foi útil para você", title: "Pague um café ao autor",
+      about: "Sou o Yudaotor. Faço software gratuito e de código aberto e, no momento, principalmente o Lyrimuse.",
+      payHeading: "Formas de apoiar", sponsor: "Patrocinar no GitHub", sponsorHint: "Patrocine com sua conta do GitHub, todo mês ou uma única vez.",
+      scanGroup: "Escanear um código QR",
       alipay: "Alipay", alipayAlt: "Código QR do Alipay", alipayHint: "Escaneie com o Alipay",
       wechat: "WeChat Pay", wechatAlt: "Código QR do WeChat Pay", wechatHint: "Escaneie com o WeChat",
-      alipayToggle: "Código QR do Alipay", wechatToggle: "Código QR do WeChat Pay"
+      usesHeading: "Para onde vai o seu apoio",
+      use1Title: "Assinatura do Last.fm Pro", use1Body: "A partir de 1º de dezembro de 2026, o Last.fm só aceita chaves de API de membros Pro. O Lyrimuse usa a conta de desenvolvedor do autor, então é essa assinatura que mantém os scrobbles e as estatísticas de todo mundo funcionando.",
+      use2Title: "Tempo para programar", use2Body: "Corrigir bugs, dar suporte a novos players e acompanhar as novas versões do macOS leva tempo.",
+      projectsHeading: "No que estou trabalhando", lyrimuseDesc: "Letras na área de trabalho do Mac, gratuitas e de código aberto, sincronizadas palavra por palavra com Apple Music, Spotify, YouTube Music e muitos outros players.",
+      website: "Site", source: "Código-fonte", moreProjects: "Mais projetos no GitHub", thanks: "Obrigado pelo seu apoio"
     },
     "vi": {
-      pageTitle: "Mời tác giả một ly cà phê ☕", description: "Nếu dự án nhỏ này giúp ích cho bạn, hãy mời tác giả một ly cà phê.",
-      title: "Mời tác giả một ly cà phê", intro: "Nếu dự án mã nguồn mở nhỏ này giúp ích cho bạn, hãy mời tác giả một ly cà phê.",
-      sponsor: "Tài trợ trên GitHub", sponsorHint: "Tài trợ bằng tài khoản GitHub, hằng tháng hoặc một lần.",
+      pageTitle: "Mời tác giả một ly cà phê ☕", description: "Nếu dự án nhỏ này giúp ích cho bạn, hãy mời tác giả một ly cà phê.", language: "Ngôn ngữ",
+      lead: "Nếu dự án mã nguồn mở nhỏ này giúp ích cho bạn", title: "Mời tác giả một ly cà phê",
+      about: "Tôi là Yudaotor. Tôi viết phần mềm miễn phí và mã nguồn mở, hiện tập trung vào Lyrimuse.",
+      payHeading: "Cách tài trợ", sponsor: "Tài trợ trên GitHub", sponsorHint: "Tài trợ bằng tài khoản GitHub, hằng tháng hoặc một lần.",
+      scanGroup: "Quét mã QR",
       alipay: "Alipay", alipayAlt: "Mã QR Alipay", alipayHint: "Quét bằng Alipay",
       wechat: "WeChat Pay", wechatAlt: "Mã QR WeChat Pay", wechatHint: "Quét bằng WeChat",
-      alipayToggle: "Mã QR Alipay", wechatToggle: "Mã QR WeChat Pay"
+      usesHeading: "Khoản tài trợ được dùng vào đâu",
+      use1Title: "Gói Last.fm Pro", use1Body: "Từ ngày 1 tháng 12 năm 2026, Last.fm chỉ chấp nhận API Key của thành viên Pro. Lyrimuse dùng tài khoản nhà phát triển của tác giả, nên phải duy trì gói này thì scrobble và thống kê của mọi người mới tiếp tục hoạt động.",
+      use2Title: "Thời gian viết mã", use2Body: "Sửa lỗi, hỗ trợ trình phát mới và theo kịp các phiên bản macOS mới đều cần thời gian.",
+      projectsHeading: "Dự án tôi đang làm", lyrimuseDesc: "Ứng dụng lời bài hát trên màn hình Mac, miễn phí và mã nguồn mở, hiện lời theo từng chữ cho Apple Music, Spotify, YouTube Music và nhiều trình phát khác.",
+      website: "Trang web", source: "Mã nguồn", moreProjects: "Các dự án khác trên GitHub", thanks: "Cảm ơn bạn đã ủng hộ"
     },
     "ru": {
-      pageTitle: "Угостить автора кофе ☕", description: "Если этот небольшой проект вам пригодился, можете угостить автора кофе.",
-      title: "Угостить автора кофе", intro: "Если этот небольшой проект с открытым кодом вам пригодился, можете угостить автора кофе.",
-      sponsor: "Поддержать на GitHub", sponsorHint: "Поддержите через аккаунт GitHub — ежемесячно или разово.",
+      pageTitle: "Угостить автора кофе ☕", description: "Если этот небольшой проект вам пригодился, можете угостить автора кофе.", language: "Язык",
+      lead: "Если этот небольшой проект с открытым кодом вам пригодился", title: "Угостить автора кофе",
+      about: "Я Yudaotor. Пишу бесплатные программы с открытым кодом, сейчас в основном Lyrimuse.",
+      payHeading: "Как поддержать", sponsor: "Поддержать на GitHub", sponsorHint: "Поддержите через аккаунт GitHub — ежемесячно или разово.",
+      scanGroup: "Оплата по QR-коду",
       alipay: "Alipay", alipayAlt: "QR-код Alipay", alipayHint: "Отсканируйте в Alipay",
       wechat: "WeChat Pay", wechatAlt: "QR-код WeChat Pay", wechatHint: "Отсканируйте в WeChat",
-      alipayToggle: "QR-код Alipay", wechatToggle: "QR-код WeChat Pay"
+      usesHeading: "На что пойдёт поддержка",
+      use1Title: "Подписка Last.fm Pro", use1Body: "С 1 декабря 2026 года Last.fm принимает API-ключи только от участников Pro. Lyrimuse использует аккаунт разработчика автора, поэтому скробблинг и статистика у всех работают, только пока эта подписка продлевается.",
+      use2Title: "Время на разработку", use2Body: "Исправлять ошибки, добавлять новые плееры и успевать за новыми версиями macOS — на всё это нужно время.",
+      projectsHeading: "Над чем я работаю", lyrimuseDesc: "Бесплатные тексты песен на рабочем столе Mac с открытым кодом: пословная синхронизация для Apple Music, Spotify, YouTube Music и многих других плееров.",
+      website: "Сайт", source: "Исходный код", moreProjects: "Другие проекты на GitHub", thanks: "Спасибо за поддержку"
     },
     "uk": {
-      pageTitle: "Пригостити автора кавою ☕", description: "Якщо цей невеликий проєкт став вам у пригоді, можете пригостити автора кавою.",
-      title: "Пригостити автора кавою", intro: "Якщо цей невеликий проєкт із відкритим кодом став вам у пригоді, можете пригостити автора кавою.",
-      sponsor: "Підтримати на GitHub", sponsorHint: "Підтримайте через обліковий запис GitHub — щомісяця або одноразово.",
+      pageTitle: "Пригостити автора кавою ☕", description: "Якщо цей невеликий проєкт став вам у пригоді, можете пригостити автора кавою.", language: "Мова",
+      lead: "Якщо цей невеликий проєкт із відкритим кодом став вам у пригоді", title: "Пригостити автора кавою",
+      about: "Я Yudaotor. Пишу безкоштовні програми з відкритим кодом, зараз переважно Lyrimuse.",
+      payHeading: "Як підтримати", sponsor: "Підтримати на GitHub", sponsorHint: "Підтримайте через обліковий запис GitHub — щомісяця або одноразово.",
+      scanGroup: "Оплата за QR-кодом",
       alipay: "Alipay", alipayAlt: "QR-код Alipay", alipayHint: "Відскануйте в Alipay",
       wechat: "WeChat Pay", wechatAlt: "QR-код WeChat Pay", wechatHint: "Відскануйте у WeChat",
-      alipayToggle: "QR-код Alipay", wechatToggle: "QR-код WeChat Pay"
+      usesHeading: "На що піде підтримка",
+      use1Title: "Підписка Last.fm Pro", use1Body: "З 1 грудня 2026 року Last.fm приймає API-ключі лише від учасників Pro. Lyrimuse використовує обліковий запис розробника автора, тож скроблінг і статистика працюють у всіх, лише поки ця підписка подовжується.",
+      use2Title: "Час на розробку", use2Body: "Виправляти помилки, додавати нові плеєри й встигати за новими версіями macOS — на все це потрібен час.",
+      projectsHeading: "Над чим я працюю", lyrimuseDesc: "Безкоштовні тексти пісень на робочому столі Mac із відкритим кодом: пословна синхронізація для Apple Music, Spotify, YouTube Music та багатьох інших плеєрів.",
+      website: "Сайт", source: "Вихідний код", moreProjects: "Інші проєкти на GitHub", thanks: "Дякую за підтримку"
     },
     "th": {
-      pageTitle: "เลี้ยงกาแฟผู้พัฒนา ☕", description: "หากโปรเจกต์เล็กๆ นี้มีประโยชน์กับคุณ เลี้ยงกาแฟผู้พัฒนาสักแก้วได้",
-      title: "เลี้ยงกาแฟผู้พัฒนา", intro: "หากโปรเจกต์โอเพนซอร์สเล็กๆ นี้มีประโยชน์กับคุณ เลี้ยงกาแฟผู้พัฒนาสักแก้วได้",
-      sponsor: "สนับสนุนบน GitHub", sponsorHint: "สนับสนุนด้วยบัญชี GitHub ได้ทั้งรายเดือนและครั้งเดียว",
+      pageTitle: "เลี้ยงกาแฟผู้พัฒนา ☕", description: "หากโปรเจกต์เล็กๆ นี้มีประโยชน์กับคุณ เลี้ยงกาแฟผู้พัฒนาสักแก้วได้", language: "ภาษา",
+      lead: "หากโปรเจกต์โอเพนซอร์สเล็กๆ นี้มีประโยชน์กับคุณ", title: "เลี้ยงกาแฟผู้พัฒนา",
+      about: "Yudaotor เขียนซอฟต์แวร์โอเพนซอร์สให้ใช้ฟรี ตอนนี้ทำ Lyrimuse เป็นหลัก",
+      payHeading: "ช่องทางการสนับสนุน", sponsor: "สนับสนุนบน GitHub", sponsorHint: "สนับสนุนด้วยบัญชี GitHub ได้ทั้งรายเดือนและครั้งเดียว",
+      scanGroup: "สแกนคิวอาร์โค้ด",
       alipay: "Alipay", alipayAlt: "คิวอาร์โค้ด Alipay", alipayHint: "สแกนด้วย Alipay",
       wechat: "WeChat Pay", wechatAlt: "คิวอาร์โค้ด WeChat Pay", wechatHint: "สแกนด้วย WeChat",
-      alipayToggle: "คิวอาร์โค้ด Alipay", wechatToggle: "คิวอาร์โค้ด WeChat Pay"
+      usesHeading: "เงินสนับสนุนนำไปใช้กับอะไร",
+      use1Title: "ค่าสมาชิก Last.fm Pro", use1Body: "ตั้งแต่วันที่ 1 ธันวาคม 2026 Last.fm รับเฉพาะ API Key ของสมาชิก Pro เท่านั้น Lyrimuse ใช้บัญชีนักพัฒนาของผู้พัฒนาเอง ต้องต่ออายุสมาชิกไว้ การ Scrobble และสถิติของทุกคนจึงจะใช้งานได้ตามปกติ",
+      use2Title: "เวลาเขียนโค้ด", use2Body: "การแก้บั๊ก การรองรับเครื่องเล่นใหม่ และการตามให้ทัน macOS เวอร์ชันใหม่ ล้วนต้องใช้เวลา",
+      projectsHeading: "สิ่งที่กำลังทำอยู่", lyrimuseDesc: "แอปเนื้อเพลงบนเดสก์ท็อป Mac ใช้ฟรีและเป็นโอเพนซอร์ส แสดงเนื้อเพลงทีละคำสำหรับ Apple Music, Spotify, YouTube Music และเครื่องเล่นอื่นๆ อีกมาก",
+      website: "เว็บไซต์", source: "ซอร์สโค้ด", moreProjects: "โปรเจกต์อื่นบน GitHub", thanks: "ขอบคุณที่สนับสนุน"
     },
     "tr": {
-      pageTitle: "Geliştiriciye bir kahve ısmarlayın ☕", description: "Bu küçük proje işinize yaradıysa geliştiriciye bir kahve ısmarlayabilirsiniz.",
-      title: "Geliştiriciye bir kahve ısmarlayın", intro: "Bu küçük açık kaynak proje işinize yaradıysa geliştiriciye bir kahve ısmarlayabilirsiniz.",
-      sponsor: "GitHub’da destek olun", sponsorHint: "GitHub hesabınızla aylık ya da tek seferlik destek olabilirsiniz.",
+      pageTitle: "Geliştiriciye bir kahve ısmarlayın ☕", description: "Bu küçük proje işinize yaradıysa geliştiriciye bir kahve ısmarlayabilirsiniz.", language: "Dil",
+      lead: "Bu küçük açık kaynak proje işinize yaradıysa", title: "Geliştiriciye bir kahve ısmarlayın",
+      about: "Ben Yudaotor. Ücretsiz, açık kaynak yazılımlar geliştiriyorum; şu sıralar çoğunlukla Lyrimuse üzerinde çalışıyorum.",
+      payHeading: "Destek yolları", sponsor: "GitHub’da destek olun", sponsorHint: "GitHub hesabınızla aylık ya da tek seferlik destek olabilirsiniz.",
+      scanGroup: "QR kodu tarayın",
       alipay: "Alipay", alipayAlt: "Alipay QR kodu", alipayHint: "Alipay ile tarayın",
       wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR kodu", wechatHint: "WeChat ile tarayın",
-      alipayToggle: "Alipay QR kodu", wechatToggle: "WeChat Pay QR kodu"
+      usesHeading: "Desteğiniz nereye gidiyor",
+      use1Title: "Last.fm Pro aboneliği", use1Body: "1 Aralık 2026’dan itibaren Last.fm yalnızca Pro üyelerin API anahtarlarını kabul ediyor. Lyrimuse geliştiricinin kendi hesabını kullandığı için herkesin scrobble’ları ve istatistikleri ancak bu abonelik sürdükçe çalışır.",
+      use2Title: "Kod yazmaya ayrılan zaman", use2Body: "Hataları düzeltmek, yeni oynatıcılar eklemek ve yeni macOS sürümlerine uyum sağlamak zaman alıyor.",
+      projectsHeading: "Üzerinde çalıştıklarım", lyrimuseDesc: "Mac için ücretsiz ve açık kaynak masaüstü şarkı sözleri: Apple Music, Spotify, YouTube Music ve daha birçok oynatıcı için kelime kelime senkronize sözler.",
+      website: "Web sitesi", source: "Kaynak kodu", moreProjects: "GitHub’daki diğer projeler", thanks: "Desteğiniz için teşekkürler"
     },
     "hi": {
-      pageTitle: "डेवलपर को एक कॉफ़ी पिलाएँ ☕", description: "अगर यह छोटा-सा प्रोजेक्ट आपके काम आया, तो डेवलपर को एक कॉफ़ी पिलाएँ।",
-      title: "डेवलपर को एक कॉफ़ी पिलाएँ", intro: "अगर यह छोटा-सा ओपन-सोर्स प्रोजेक्ट आपके काम आया, तो डेवलपर को एक कॉफ़ी पिलाएँ।",
-      sponsor: "GitHub पर सहयोग करें", sponsorHint: "अपने GitHub खाते से हर महीने या एक बार सहयोग करें।",
+      pageTitle: "डेवलपर को एक कॉफ़ी पिलाएँ ☕", description: "अगर यह छोटा-सा प्रोजेक्ट आपके काम आया, तो डेवलपर को एक कॉफ़ी पिलाएँ।", language: "भाषा",
+      lead: "अगर यह छोटा-सा ओपन-सोर्स प्रोजेक्ट आपके काम आया", title: "डेवलपर को एक कॉफ़ी पिलाएँ",
+      about: "मैं Yudaotor हूँ। मुफ़्त और ओपन-सोर्स सॉफ़्टवेयर बनाता हूँ, आजकल ज़्यादातर Lyrimuse पर काम कर रहा हूँ।",
+      payHeading: "सहयोग के तरीके", sponsor: "GitHub पर सहयोग करें", sponsorHint: "अपने GitHub खाते से हर महीने या एक बार सहयोग करें।",
+      scanGroup: "QR कोड स्कैन करें",
       alipay: "Alipay", alipayAlt: "Alipay QR कोड", alipayHint: "Alipay से स्कैन करें",
       wechat: "WeChat Pay", wechatAlt: "WeChat Pay QR कोड", wechatHint: "WeChat से स्कैन करें",
-      alipayToggle: "Alipay QR कोड", wechatToggle: "WeChat Pay QR कोड"
+      usesHeading: "आपका सहयोग कहाँ लगेगा",
+      use1Title: "Last.fm Pro सदस्यता", use1Body: "1 दिसंबर 2026 से Last.fm सिर्फ़ Pro सदस्यों की API Key स्वीकार करता है। Lyrimuse में डेवलपर का अपना खाता इस्तेमाल होता है, इसलिए यह सदस्यता चलती रहे तभी सबकी स्क्रॉबलिंग और आँकड़े ठीक से काम करते रहेंगे।",
+      use2Title: "कोड लिखने का समय", use2Body: "बग ठीक करने, नए प्लेयर जोड़ने और macOS के नए वर्ज़न के साथ चलने में समय लगता है।",
+      projectsHeading: "मैं किस पर काम कर रहा हूँ", lyrimuseDesc: "Mac के लिए मुफ़्त और ओपन-सोर्स डेस्कटॉप लिरिक्स: Apple Music, Spotify, YouTube Music और कई दूसरे प्लेयर के लिए शब्द-दर-शब्द चलते बोल।",
+      website: "वेबसाइट", source: "सोर्स कोड", moreProjects: "GitHub पर दूसरे प्रोजेक्ट", thanks: "सहयोग के लिए धन्यवाद"
     }
   };
   // ?lang= 先认(ja、pt-BR、zh-Hans 这类写法,大小写不限),认不出就按浏览器语言列表挨个找。
@@ -408,6 +687,55 @@
   if (meta) meta.setAttribute("content", t.description);
   document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t[el.getAttribute("data-i18n")]; });
   document.querySelectorAll("[data-i18n-alt]").forEach(function (el) { el.alt = t[el.getAttribute("data-i18n-alt")]; });
+  document.querySelectorAll("[data-i18n-aria]").forEach(function (el) { el.setAttribute("aria-label", t[el.getAttribute("data-i18n-aria")]); });
+
+  // Lyrimuse 官网按语言分目录：英文在根目录，简体在 zh/，其它语言目录名就是语言码。
+  var site = document.getElementById("site-link");
+  if (site) site.href = "https://yudaotor.github.io/lyrimuse/" + (lang === "en" ? "" : lang === "zh-Hans" ? "zh/" : lang + "/");
+
+  // 换语言：改 ?lang= 重新打开，#alipay / #wechat 原样带上。
+  var sel = document.getElementById("lang");
+  if (sel) {
+    sel.value = lang;
+    sel.addEventListener("change", function () {
+      var q = new URLSearchParams(location.search);
+      q.set("lang", sel.value);
+      location.search = q.toString();
+    });
+  }
+
+  // 标题按片段拆开，每段带上在整行里的起点 --k 和长度 --w，CSS 按顺序把灰字填满。中日文按字拆，其它语言按词拆（天城文、泰文的字形组合不能从中间断开）。
+  var h1 = document.getElementById("title");
+  if (h1 && window.CSS && (CSS.supports("background-clip", "text") || CSS.supports("-webkit-background-clip", "text"))) {
+    var text = h1.textContent, parts = [];
+    var byChar = /^(zh|ja)/.test(lang);
+    if (window.Intl && Intl.Segmenter) {
+      var seg = new Intl.Segmenter(lang, { granularity: byChar ? "grapheme" : "word" });
+      for (var it = seg.segment(text)[Symbol.iterator](), s = it.next(); !s.done; s = it.next()) parts.push(s.value.segment);
+    } else {
+      parts = byChar ? Array.from(text) : text.split(/(\s+)/);
+    }
+    var total = 0;
+    parts.forEach(function (p) { total += Math.max(1, Array.from(p.trim()).length); });
+    var unit = Math.max(40, Math.min(120, 1500 / total));
+    var inner = document.createElement("span");
+    inner.setAttribute("aria-hidden", "true");
+    var k = 0;
+    parts.forEach(function (p) {
+      var w = Math.max(1, Array.from(p.trim()).length);
+      var span = document.createElement("span");
+      span.className = "c";
+      span.textContent = p;
+      span.style.setProperty("--k", k);
+      span.style.setProperty("--w", w);
+      inner.appendChild(span);
+      k += w;
+    });
+    h1.style.setProperty("--u", unit.toFixed(1) + "ms");
+    h1.setAttribute("aria-label", text);
+    h1.textContent = "";
+    h1.appendChild(inner);
+  }
 })();
 // 带着 #alipay / #wechat 进来(仓库 Sponsor 按钮、主页 README 的链接)时展开对应那张收款码。
 (function () {
